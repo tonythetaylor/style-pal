@@ -19,7 +19,7 @@ const BottomTab = () => {
                 component={ProductScreen}
                 options={{
                     tabBarLabel: '',
-                    tabBarIcon: ({ size, color }) => (<Icon name={"home"} color={'#000'} size={size} />),
+                    tabBarIcon: ({ size, color }) => (<Icon name={"home"} color={color} size={size} />),
                     tabBarItemStyle:{
                         margin:5,
                         borderRadius:16,
@@ -31,7 +31,7 @@ const BottomTab = () => {
                 component={UserScreen}
                 options={{
                     tabBarLabel: '',
-                    tabBarIcon: ({ size, color }) => (<FontAwesomeIcon icon={faDoorOpen} color={'#000'} size={size}/>),
+                    tabBarIcon: ({ size, color }) => (<FontAwesomeIcon icon={faDoorOpen} color={color} size={size}/>),
                     tabBarItemStyle:{
                         margin:5,
                         borderRadius:16,
@@ -43,7 +43,7 @@ const BottomTab = () => {
                 component={HomeScreen}
                 options={{
                     tabBarLabel: '',
-                    tabBarIcon: ({ size, color }) => (<FontAwesomeIcon icon={faShirt} color={'#000'} size={size}/>),
+                    tabBarIcon: ({ size, color }) => (<FontAwesomeIcon icon={faShirt} color={color} size={size}/>),
                     tabBarItemStyle:{
                         margin:5,
                         borderRadius:16,
@@ -55,7 +55,7 @@ const BottomTab = () => {
                 component={CameraScreen}
                 options={{
                     tabBarLabel: '',
-                    tabBarIcon: ({ size, color }) => (<FontAwesomeIcon icon={faCameraAlt} color={'#000'} size={size}/>),
+                    tabBarIcon: ({ size, color }) => (<FontAwesomeIcon icon={faCameraAlt} color={color} size={size}/>),
                     tabBarItemStyle:{
                         margin:5,
                         borderRadius:16,

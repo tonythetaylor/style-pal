@@ -4,6 +4,8 @@ import { FlatGrid } from 'react-native-super-grid';
 import pantsData from "../bottomData";
 import shoeData from "../shoeData";
 import shirtData from "../topdata";
+import brandData from "../brandData";
+
 
 export default function UserScreen() {
     const [items, setItems] = React.useState([shirtData]);
@@ -12,14 +14,14 @@ export default function UserScreen() {
         <>
             <View style={[
                 styles.container__header, {
-                    flexDirection: "row"
+                    flexDirection: "row",
                 }]}>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    {shirtData.map((item, idx) =>
+                    {brandData.map((item, idx) =>
                         <View key={idx}
                             style={styles.container__header__scrollview}>
                             <Image style={styles.container__header__scrollview__image} source={{ uri: item.url }} />
-                            <Text style={styles.container__header__scrollview__text}>{item.brand}</Text>
+                            {/* <Text style={styles.container__header__scrollview__text}>Brand Name</Text> */}
                         </View>
                     )}
                 </ScrollView>
@@ -30,8 +32,11 @@ export default function UserScreen() {
                 flexDirection: "column"
             }]}>
                 <View style={{
-                    flex: 3, backgroundColor: "white",
-                    alignItems: "center", position: 'relative', alignContent: "center",
+                    flex: 3, 
+                    backgroundColor: "white",
+                    alignItems: "center", 
+                    position: 'relative', 
+                    alignContent: "center",
                 }} >
                     <Text>Top</Text>
                     <FlatGrid
@@ -60,7 +65,7 @@ export default function UserScreen() {
                         fixed
                         spacing={10}
                         renderItem={({ item }) => (
-                            <View style={[styles.itemContainer, { backgroundColor: item.code, alignContent: "center", alignItems: "center" }]}>
+                            <View style={[styles.itemContainer, { backgroundColor: item.code, alignContent: "center", alignItems: "center"}]}>
                                 <Image source={{ uri: item.url }} style={{ width: 120, height: 120 }} />
                                 <Text style={styles.itemCode}>{item.style}</Text>
                             </View>
@@ -140,7 +145,9 @@ const styles = StyleSheet.create({
     container__header: {
         height: 75,
         padding: 5,
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        alignContent: "center",
+
     },
     container__header__scrollview: {
         width: 45,
@@ -149,24 +156,26 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         marginLeft: 20,
         marginRight: 20,
-
         alignContent: "center",
-        alignItems: "center"
+        alignItems:'center',
+        justifyContent:'center'
     },
     container__header__scrollview__image: {
         width: 45,
         height: 45,
-        borderRadius: 180 / 2
+        borderRadius: 180 / 2,
+        resizeMode: 'contain',
+        borderWidth: .25
     },
     container__header__scrollview__text: {
         fontWeight: '600',
         fontSize: 10,
         color: '#000',
         position: 'absolute',
-        bottom: -65,
-        height: 60,
-        width: 60,
-        textAlign: 'justify'
+        bottom: -90,
+        height: 90,
+        width: 90,
+        left: -10,
     },
     gridView: {
         marginTop: 10,
