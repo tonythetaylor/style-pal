@@ -50,16 +50,17 @@ const styles = StyleSheet.create({
     },
     card: {
         backgroundColor: '#fff',
-        marginBottom: 25
+        marginBottom: 25,
+        paddingTop: 5
     },
     cardHeader: {
         padding: 10,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     cardTitle: {
-        color: '#000'
+        color: '#000',
     },
     cardImage: {
         width: '100%',

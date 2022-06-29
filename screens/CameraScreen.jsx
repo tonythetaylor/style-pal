@@ -6,7 +6,7 @@ import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import { Input } from 'react-native-elements';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
+import { faPaperPlane, faCancel } from '@fortawesome/free-solid-svg-icons'
 
 
 let camera = Camera;
@@ -78,6 +78,7 @@ const CameraScreen = ({ navigation }) => {
         })
         console.log(brandStyle, itemColor, brand, pickedImagePath)
         setPickedImagePath('')
+        setPickedImagePath('')
         onChangeBrand('')
         onChangeBrandStyle('')
         onChangeColor('')
@@ -86,8 +87,8 @@ const CameraScreen = ({ navigation }) => {
     return (
         <View style={styles.screen}>
             <View style={styles.buttonContainer}>
-                <Button onPress={showImagePicker} title="Select an image" />
-                <Button onPress={openCamera} title="Open camera" />
+                <Button onPress={showImagePicker} title="Select an image"  color="#000" />
+                <Button onPress={openCamera} title="Open camera"  color="#000" />
             </View>
 
             <View style={styles.imageContainer}>
@@ -132,12 +133,15 @@ const CameraScreen = ({ navigation }) => {
                 }
             </View>
 
-            <View>
+            <View style={styles.buttonContainer}>
                 <TouchableOpacity onPress={sendData} style={{ padding: 10, paddingLeft: 15 }}>
                     <FontAwesomeIcon icon={faPaperPlane} size={23} color={"#000"} />
                 </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={{ padding: 10, paddingLeft: 15 }}>
+                    <FontAwesomeIcon icon={faCancel} size={23} color={"#000"} />
+                </TouchableOpacity>
 
-                <Button title="Go back" onPress={() => navigation.goBack()} />
+                {/* <Button title="Go back" onPress={() => navigation.goBack()}  color="#000" /> */}
             </View>
         </View>
     );
@@ -155,7 +159,7 @@ const styles = StyleSheet.create({
         width: 400,
         flexDirection: 'row',
         justifyContent: 'space-around',
-        borderBottomWidth: .25
+        borderBottomWidth: .25,
     },
     imageContainer: {
         flex: 1,

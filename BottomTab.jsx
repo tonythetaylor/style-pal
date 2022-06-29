@@ -4,9 +4,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faDoorOpen, faCameraAlt, faShirt, faPlus } from '@fortawesome/free-solid-svg-icons'
-import HomeScreen from './screens/HomeScreen';
-import ProductScreen from './screens/ProductScreen';
-import UserScreen from './screens/UserScreen';
+import TodaysPicksScreen from './screens/TodaysPicksScreen';
+import PastLooksScreen from './screens/PastLooksScreen';
+import ClosetScreen from './screens/ClosetScreen';
 import CameraScreen from './screens/CameraScreen';
 
 
@@ -20,7 +20,7 @@ const BottomTab = ({ navigation }) => {
           }}>
             <Tab.Screen
                 name={'Past Looks'}
-                component={ProductScreen}
+                component={PastLooksScreen}
                 options={{
                     tabBarLabel: '',
                     tabBarIcon: ({ focused, size, color }) => (<Icon name={"home"} color={focused ? "#10498f" : "black"} size={24} />),
@@ -32,7 +32,7 @@ const BottomTab = ({ navigation }) => {
                 }} />
             <Tab.Screen
                 name='Closet'
-                component={UserScreen}
+                component={ClosetScreen}
                 options={{
                     tabBarLabel: '',
                     tabBarIcon: ({ focused, size, color }) => (<FontAwesomeIcon icon={faDoorOpen} color={focused ? "#10498f" : "black"} size={24} />),
@@ -44,7 +44,7 @@ const BottomTab = ({ navigation }) => {
                 }} />
             <Tab.Screen
                 name={`Today's picks`}
-                component={HomeScreen}
+                component={TodaysPicksScreen}
                 options={({ route, navigation }) => ({ // transform screenOptions to a function
                     tabBarLabel: '',
                     tabBarIcon: ({ focused, size, color }) => (<FontAwesomeIcon icon={faShirt} color={focused ? "#10498f" : "black"} size={24} />),
