@@ -27,7 +27,7 @@ const brandData = [
     {
         'id': 6,
         'brand' : 'GAP',
-        url: 'https://research-methodology.net/wp-content/uploads/2016/10/Gap-Inc.-Business-Strategy-and-Competitive-Advantage.png'
+        url: 'https://lespromenades.com/wp-content/uploads/2021/09/98889bc0acd81932d1537790d1398c178c04af64-1.png'
     }
 ]
 

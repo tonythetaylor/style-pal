@@ -1,32 +1,10 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { Avatar } from 'react-native-elements';
 import personData from "../personData";
 
-const DATA = [
-    {
-        id: 1,
-        postTitle: 'Planet of Nature',
-        avatarURI:
-            'https://images.unsplash.com/photo-1559526323-cb2f2fe2591b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
-        imageURI:
-            'https://images.unsplash.com/photo-1482822683622-00effad5052e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
-        randomText:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
-    },
-    {
-        id: 2,
-        postTitle: 'Lampost',
-        avatarURI:
-            'https://images.unsplash.com/photo-1559526323-cb2f2fe2591b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
-        imageURI:
-            'https://images.unsplash.com/photo-1482822683622-00effad5052e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
-        randomText:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
-    }
-]
-
-export default function ProductScreen() {
+export default function ProductScreen({ navigation }) {
+   
     const renderItem = ({ item }) => (
         <View style={styles.container}>
             <View style={styles.card}>
@@ -39,7 +17,7 @@ export default function ProductScreen() {
                         {item.brand}
                     </Text>
                     <TouchableOpacity
-                        onPress={() => console.log('Button pressed')}>
+                        onPress={() => navigation.navigate('Closet')}>
                         <Image
                             source={{ uri: item.url }}
                             size='small'
@@ -55,6 +33,7 @@ export default function ProductScreen() {
     )
 
     return (
+        
         <FlatList
             style={styles.container}
             data={personData}

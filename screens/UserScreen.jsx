@@ -38,7 +38,7 @@ export default function UserScreen() {
                     position: 'relative', 
                     alignContent: "center",
                 }} >
-                    <Text>Top</Text>
+                    <Text>Tops</Text>
                     <FlatGrid
                         itemDimension={130}
                         data={shirtData}
@@ -143,11 +143,10 @@ const styles = StyleSheet.create({
         // justifyContent: 'center'
     },
     container__header: {
-        height: 75,
+        height: 55,
         padding: 5,
         backgroundColor: '#fff',
-        alignContent: "center",
-
+        alignContent: "center"
     },
     container__header__scrollview: {
         width: 45,
