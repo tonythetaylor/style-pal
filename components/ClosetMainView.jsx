@@ -24,12 +24,30 @@ const AppButton = ({ onPress, title }) => (
     </TouchableOpacity>
 );
 
-const ClosetMainView = () => {
+const ClosetMainView = ({ route, navigation }) => {
     const [items, setItems] = useState([]);
-    const [selected, setSelected] = useState(shirtData)
+    const [selected, setSelected] = useState([])
     const [toggle, setToggle] = useState(false)
     const [optionsIndex, setOptionsIndex] = useState(0);
     const [selectedArr, setSelectedArr] = useState([]);
+    const [propData, setData] = useState({})
+
+    const [shirts, setShirtData] = useState([])
+    const [pants, setPantsData] = useState([])
+    const [shoes, setShoesData] = useState([])
+
+    // console.log('DEBUG 3 ->', route)
+    const { data, type } = route.params;
+    // console.log(JSON.stringify(data) === '{}')
+
+    // if (JSON.stringify(data) === '{}') {
+    //     console.log(route.params)
+    // }
+    // if (route != undefined) {
+    //     console.log('DATA:::::::::', data)
+    // }
+    // console.log('PROP DATA: ', data )
+    // console.log('PROP TYPE: ', selected )
 
     // pick an item from the main view stage, remove the item when picked
     const pickItem = (item) => {
@@ -41,6 +59,29 @@ const ClosetMainView = () => {
         }
          
     }
+
+    const setClosetByItem = (item) => {
+        if (item.type == 'Shirt') {
+            let d = []
+            d.push(item)
+            setShirtData(d)
+        } 
+        
+        if (item.type == 'Pants') {
+            let d = []
+            d.push(item)
+            setPantsData(d)
+        } 
+
+        if (item.type == 'Shoes') {
+            let d = []
+            d.push(item)
+            setShoesData(d)
+        }
+    }
+
+    // setClosetByItem(data)
+    // console.log('SHIRT DATA', shirts)
 
     const hangItemUp = (item) => {
         // this is the line that you are looking for
@@ -94,6 +135,16 @@ const ClosetMainView = () => {
         );
     };
 
+    useEffect(() => {
+            if(JSON.stringify(data) !== '{}') {
+                if (JSON.stringify(selected) !== '{}') {
+                    setClosetByItem(data)
+                    setSelected(current => [data, ...current]);
+                    navigation.setParams({data: {}})
+                } 
+            }
+      }, [data]);
+
     return (
         <View style={[styles.container, {
             // Try setting `flexDirection` to `"row"`.
@@ -113,17 +164,17 @@ const ClosetMainView = () => {
                 paddingLeft: 10
             }}>
                 <View>
-                <TouchableOpacity style={{paddingRight: 10}} onPress={() => setSelected(shirtData)}>
+                <TouchableOpacity style={{paddingRight: 10}} onPress={() => setSelected(shirts)}>
                          <FontAwesomeIcon icon={faT} color={'black'} size={24} />
                 </TouchableOpacity>
                 </View>
                 <View>
-                <TouchableOpacity style={{paddingRight: 10}} onPress={() =>  setSelected(pantsData)}>
+                <TouchableOpacity style={{paddingRight: 10}} onPress={() =>  setSelected(pants)}>
                          <FontAwesomeIcon icon={faP} color={'black'} size={24} />
                 </TouchableOpacity>
                 </View>
                 <View>
-                <TouchableOpacity style={{paddingRight: 10}} onPress={() =>  setSelected(shoeData)}>
+                <TouchableOpacity style={{paddingRight: 10}} onPress={() =>  setSelected(shoes)}>
                          <FontAwesomeIcon icon={faS} color={'black'} size={24} />
                 </TouchableOpacity>
                 </View>

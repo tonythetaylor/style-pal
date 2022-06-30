@@ -9,7 +9,7 @@ import shirtData from "../topdata";
 import brandData from "../brandData";
 import ClosetGridView from '../components/ClosetGridView';
 
-export default function UserScreen() {
+export default function ClosetScreen({ route, navigation }) {
     const [items, setItems] = React.useState([shirtData]);
 
     return (
@@ -29,7 +29,7 @@ export default function UserScreen() {
                 </ScrollView>
             </View>
 
-            <ClosetMainView/>
+            <ClosetMainView route={route} navigation={navigation} />
             {/* <ClosetGridView/> */}
         </>
     );
