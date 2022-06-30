@@ -1,23 +1,29 @@
 
 import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect} from 'react';
-import { StyleSheet, Storage, Text, View, TouchableOpacity, Alert, ImageBackground, Button, Image, SafeAreaView, TextInput } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Storage, Text, View, TouchableOpacity, Alert, ImageBackground, Button, Image, SafeAreaView } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import { Input } from 'react-native-elements';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faPaperPlane, faCancel } from '@fortawesome/free-solid-svg-icons'
+import { TextInput } from 'react-native-paper';
 
+import uuid from 'react-native-uuid';
 
-let camera = Camera;
+const ShowImagePicker = ({ renderItem }) => (
+    <View renderItem={renderItem} style={{ width: 10, height: 15, marginLeft: 1, marginTop: 1 }}>
+    </View>
+);
 
 const CameraScreen = ({ navigation }) => {
     // The path of the picked image
     const [pickedImagePath, setPickedImagePath] = useState('');
     const [brand, onChangeBrand] = useState("");
     const [brandStyle, onChangeBrandStyle] = useState("");
-    const [itemColor, onChangeColor] = useState([]);
-    const [itemSize, onChangeSize] = useState(null);
+    const [itemColor, onChangeColor] = useState("");
+    const [itemSize, onChangeSize] = useState("");
+    const [backgroundColor, setBackgroundColor] = useState()
 
     // useEffect(() => {
     //    setPickedImagePath('')
@@ -69,69 +75,94 @@ const CameraScreen = ({ navigation }) => {
     }
 
     const sendData = () => {
-        navigation.navigate('Past Looks', {
-            style: brandStyle,
-            colorway: itemColor,
-            release: 2022,
-            brand: brand,
-            url: pickedImagePath
-        })
-        console.log(brandStyle, itemColor, brand, pickedImagePath)
+        const d = {
+            data: {
+                id: uuid.v4(),
+                style: brandStyle,
+                colorway: itemColor,
+                release: 2022,
+                brand: brand,
+                url: pickedImagePath
+            }
+        }
+        
+        navigation.navigate('Past Looks', {...d})
+        // console.log(brandStyle, itemColor, brand, pickedImagePath)
         setPickedImagePath('')
         setPickedImagePath('')
         onChangeBrand('')
         onChangeBrandStyle('')
         onChangeColor('')
+        navigation.setParams({ data: null });
+
     }
 
     return (
         <View style={styles.screen}>
             <View style={styles.buttonContainer}>
-                <Button onPress={showImagePicker} title="Select an image"  color="#000" />
-                <Button onPress={openCamera} title="Open camera"  color="#000" />
+                <Button onPress={showImagePicker} title="Select an image" color="#000" />
+                <Button onPress={openCamera} title="Open camera" color="#000" />
             </View>
 
             <View style={styles.imageContainer}>
                 {
                     pickedImagePath !== '' &&
-                    <View style={styles.container__input}>
+                    <View>
                         <Image
                             source={{ uri: pickedImagePath }}
                             style={styles.image}
                         />
+                    </View>
+
+                }
+                <View style={styles.container__input}>
+                    {
+                        pickedImagePath !== '' &&
                         <SafeAreaView>
                             <TextInput
                                 style={styles.input}
-                                onChangeText={onChangeBrand}
+                                onChangeText={(text) => onChangeBrand(text)}
                                 value={brand}
-                                placeholder="Add the brand"
+                                mode="outlined"
+                                label="Brand"
+                                outlineColor="black"
+                                selectionColor="black"
+                                activeOutlineColor="black"
                             />
                             <TextInput
                                 style={styles.input}
-                                onChangeText={onChangeBrandStyle}
+                                onChangeText={(text) => onChangeBrandStyle(text)}
                                 value={brandStyle}
-                                placeholder="Add the style"
+                                mode="outlined"
+                                label="Style"
+                                outlineColor="black"
+                                activeOutlineColor="black"
                             />
                             <TextInput
                                 style={styles.input}
                                 // onChangeText={onChangeColor}
-                                onChangeText={onChangeColor}
+                                onChangeText={(text) => onChangeColor(text)}
                                 value={itemColor}
-                                placeholder="Add the color"
+                                mode="outlined"
+                                label="Color"
+                                outlineColor="black"
+                                activeOutlineColor="black"
                             />
                             <TextInput
                                 style={styles.input}
-                                onChangeText={onChangeSize}
+                                onChangeText={(text) => onChangeSize(text)}
                                 value={itemSize}
-                                placeholder="Add the size"
-                                keyboardType="numeric"
+                                mode="outlined"
+                                label="Size"
+                                outlineColor="black"
+                                selectionColor="black"
+                                activeOutlineColor="black"
                             />
                         </SafeAreaView>
-
-                    </View>
-
-                }
+                    }
+                </View>
             </View>
+            <ShowImagePicker style={styles.screen} renderItem={showImagePicker} />
 
             <View style={styles.buttonContainer}>
                 <TouchableOpacity onPress={sendData} style={{ padding: 10, paddingLeft: 15 }}>
@@ -153,7 +184,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         height: '100%',
-        backgroundColor: '#fff',
+        backgroundColor: '#fff'
     },
     buttonContainer: {
         width: 400,
@@ -163,24 +194,30 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         flex: 1,
-        padding: 30,
+        padding: 10,
         backgroundColor: '#fff',
-
+        flexDirection: "row",
     },
     image: {
-        width: 400,
-        height: '85%',
-        resizeMode: 'cover'
+        width: 200,
+        height: 200,
+        // height: '85%',
+        resizeMode: 'cover',
     },
     container__input: {
-        paddingTop: 20
+        flex: 2,
+        paddingTop: 5,
+        // width: '100%'
     },
     input: {
         margin: 2,
+        marginLeft: 5,
+        backgroundColor: 'white',
+
         // height: 40,
         // borderColor: '#000',
-        borderBottomWidth: .5,
-        borderBottomColor: '#000',
+        height: 35
+
         // borderWidth: .25
     },
 });

@@ -21,6 +21,7 @@ const BottomTab = ({ navigation }) => {
             <Tab.Screen
                 name={'Past Looks'}
                 component={PastLooksScreen}
+                initialParams={{ data: {} }}
                 options={{
                     tabBarLabel: '',
                     tabBarIcon: ({ focused, size, color }) => (<Icon name={"home"} color={focused ? "#10498f" : "black"} size={24} />),

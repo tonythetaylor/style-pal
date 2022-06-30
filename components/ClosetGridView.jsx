@@ -5,6 +5,7 @@ import pantsData from "../bottomData";
 import shoeData from "../shoeData";
 import shirtData from "../topdata";
 import brandData from "../brandData";
+
 const ClosetGridView = () => {
   return (
     <View style={[styles.container, {
