@@ -196,41 +196,43 @@ const ClosetMainView = ({ route, navigation }) => {
                 flexDirection: 'row',
                 zIndex:1,
                 alignItems: "space-between",
-                paddingLeft: 10
+                // paddingLeft: 5,
+                // justifyContent: "space-between"
             }}>
-                <View>
-                <TouchableOpacity style={{paddingRight: 10}} onPress={() => setSelected(shirts)}>
+                <View style={{top: 5, marginLeft: 20, marginRight: 20, flex: 1, flexDirection: "row", justifyContent: "space-between", borderRadius: 5, borderWidth: 2, borderColor: 'white', backgroundColor: 'white'}}>
+                <TouchableOpacity onPress={() => setSelected(shirts)}>
                          {/* <FontAwesomeIcon icon={faT} color={'black'} size={24} /> */}
-                         <Text>[SHIRTS]</Text>
+                         <Text style={{color: 'black', borderRadius: 5, borderWidth: .50, borderColor: 'black', padding: 5}}>SHIRTS</Text>
                 </TouchableOpacity>
-                </View>
-                <View>
-                <TouchableOpacity style={{paddingRight: 10}} onPress={() =>  setSelected(pants)}>
+                <TouchableOpacity style={{}} onPress={() =>  setSelected(pants)}>
                          {/* <FontAwesomeIcon icon={faP} color={'black'} size={24} /> */}
-                         <Text>[PANTS]</Text>
+                         <Text style={{color: 'black', borderRadius: 5, borderWidth: .50, borderColor: 'black', padding: 5}}>PANTS</Text>
 
                 </TouchableOpacity>
-                </View>
-                <View>
-                <TouchableOpacity style={{paddingRight: 10}} onPress={() =>  setSelected(shoes)}>
+                <TouchableOpacity style={{}} onPress={() =>  setSelected(shoes)}>
                          {/* <FontAwesomeIcon icon={faS} color={'black'} size={24} /> */}
-                         <Text>[SHOES]</Text>
+                         <Text style={{color: 'black', borderRadius: 5, borderWidth: .50, borderColor: 'black', padding: 5}}>SHOES</Text>
 
                 </TouchableOpacity>
-                </View>
-                <View  style={{left: 145}}>
                 <TouchableOpacity  onPress={() => matchItems(items)}>
                          {/* <FontAwesomeIcon icon={faS} color={'black'} size={24} /> */}
-                         <Text>[MATCH]</Text>
+                         <Text style={{color: 'black', borderRadius: 5, borderWidth: .50, borderColor: 'black', padding: 5}}>MATCH</Text>
                 </TouchableOpacity>
                 </View>
             </View>
+            {selected.length !== 0 ? 
                 <Carousel
                     data={selected}
                     renderItem={mainView}
                     sliderWidth={SLIDER_WIDTH}
                     itemWidth={ITEM_WIDTH}
                 />
+                :
+                <View style={{alignContent: 'center', justifyContent: 'center', alignItems: 'center', top: -75, zIndex: 1}}>
+                    <Text >Select a category to add clothing items</Text>
+                    <View style={{width: SLIDER_WIDTH}}></View>
+                </View>
+                }
             </View>
             {/* picked stage view */}
             <View style={{ backgroundColor: "white", height: 150 }} >

@@ -74,6 +74,11 @@ const CameraScreen = ({ navigation }) => {
         }
     }
 
+    const removeImagepath = () => {
+        setPickedImagePath('')
+        navigation.goBack()
+    }
+
     const sendData = () => {
         const d = {
             data: {
@@ -100,8 +105,12 @@ const CameraScreen = ({ navigation }) => {
     return (
         <View style={styles.screen}>
             <View style={styles.buttonContainer}>
-                <Button onPress={showImagePicker} title="Select an image" color="#000" />
-                <Button onPress={openCamera} title="Open camera" color="#000" />
+                <View style={styles.button} >
+                    <Button onPress={showImagePicker} title="Select an image" color="#fff"/>
+                </View>
+                <View style={styles.button} >
+                <Button onPress={openCamera} title="Open camera" color="#fff" />
+                </View>
             </View>
 
             <View style={styles.imageContainer}>
@@ -165,10 +174,13 @@ const CameraScreen = ({ navigation }) => {
             <ShowImagePicker style={styles.screen} renderItem={showImagePicker} />
 
             <View style={styles.buttonContainer}>
+            { pickedImagePath !== '' ?
                 <TouchableOpacity onPress={sendData} style={{ padding: 10, paddingLeft: 15 }}>
                     <FontAwesomeIcon icon={faPaperPlane} size={23} color={"#000"} />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={{ padding: 10, paddingLeft: 15 }}>
+                : []
+            }
+                <TouchableOpacity onPress={() => removeImagepath()} style={{ padding: 10, paddingLeft: 15 }}>
                     <FontAwesomeIcon icon={faCancel} size={23} color={"#000"} />
                 </TouchableOpacity>
 
@@ -187,11 +199,30 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     buttonContainer: {
+        flex: 1,
+        flexDirection: 'row',
         width: 400,
         flexDirection: 'row',
         justifyContent: 'space-around',
-        borderBottomWidth: .25,
+        alignItems: "space-between"
     },
+    button: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 1,
+        paddingHorizontal: 32,
+        borderRadius: 4,
+        elevation: 3,
+        backgroundColor: 'black',
+        height: 50
+      },
+      text: {
+        fontSize: 16,
+        lineHeight: 21,
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
+        color: 'white',
+      },
     imageContainer: {
         flex: 1,
         padding: 10,

@@ -19,14 +19,14 @@ const ShowImagePicker = ({ renderItem }) => (
     </View>
 );
 
-const HangupItemScreen = ({ navigation }) => {    
+const HangupItemScreen = ({ navigation }) => {
     // The path of the picked image
     const [pickedImagePath, setPickedImagePath] = useState('');
     const [brand, onChangeBrand] = useState("");
     const [brandStyle, onChangeBrandStyle] = useState("");
     const [itemColor, onChangeColor] = useState("");
     const [itemSize, onChangeSize] = useState("");
-    const [selection, setSelection] = useState([])    
+    const [selection, setSelection] = useState([])
 
     // useEffect(() => {
     //    setPickedImagePath('')
@@ -77,6 +77,11 @@ const HangupItemScreen = ({ navigation }) => {
         }
     }
 
+    const removeImagepath = () => {
+        setPickedImagePath('')
+        navigation.goBack()
+    }
+
     const sendData = () => {
         const d = {
             data: {
@@ -85,7 +90,7 @@ const HangupItemScreen = ({ navigation }) => {
                 colorway: itemColor,
                 release: 2022,
                 brand: brand,
-                url: pickedImagePath,         
+                url: pickedImagePath,
                 type: selection,
 
             }
@@ -106,8 +111,12 @@ const HangupItemScreen = ({ navigation }) => {
     return (
         <View style={styles.screen}>
             <View style={styles.buttonContainer}>
-                <Button onPress={showImagePicker} title="Select an image" color="#000" />
-                <Button onPress={openCamera} title="Open camera" color="#000" />
+                <View style={styles.button} >
+                    <Button onPress={showImagePicker} title="Select an image" color="#fff" />
+                </View>
+                <View style={styles.button} >
+                    <Button onPress={openCamera} title="Open camera" color="#fff" />
+                </View>
             </View>
 
             <View style={styles.imageContainer}>
@@ -188,10 +197,13 @@ const HangupItemScreen = ({ navigation }) => {
             <ShowImagePicker style={styles.screen} renderItem={showImagePicker} />
 
             <View style={styles.buttonContainer}>
-                <TouchableOpacity onPress={sendData} style={{ padding: 10, paddingLeft: 15 }}>
-                    <FontAwesomeIcon icon={faPaperPlane} size={23} color={"#000"} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={{ padding: 10, paddingLeft: 15 }}>
+                {pickedImagePath !== '' ?
+                    <TouchableOpacity onPress={sendData} style={{ padding: 10, paddingLeft: 15 }}>
+                        <FontAwesomeIcon icon={faPaperPlane} size={23} color={"#000"} />
+                    </TouchableOpacity>
+                    : []
+                }
+                <TouchableOpacity onPress={() => removeImagepath()} style={{ padding: 10, paddingLeft: 15 }}>
                     <FontAwesomeIcon icon={faCancel} size={23} color={"#000"} />
                 </TouchableOpacity>
 
@@ -210,11 +222,30 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     buttonContainer: {
+        flex: 1,
+        flexDirection: 'row',
         width: 400,
         flexDirection: 'row',
         justifyContent: 'space-around',
-        borderBottomWidth: .25,
+        alignItems: "space-between"
     },
+    button: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 1,
+        paddingHorizontal: 32,
+        borderRadius: 4,
+        elevation: 3,
+        backgroundColor: 'black',
+        height: 50
+      },
+      text: {
+        fontSize: 16,
+        lineHeight: 21,
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
+        color: 'white',
+      },
     imageContainer: {
         flex: 1,
         padding: 10,

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, RefreshControl } from 'react-native'
 import { Avatar } from 'react-native-elements';
 import personData from "../personData";
@@ -10,63 +10,62 @@ let STORAGE_KEY = '@propData';
 export default function PastLooksScreen({ route, navigation }) {
     const [propData, setData] = useState([])
     const [isFetching, setIsFetching] = useState(false);
-      /* 2. Get the param */
+    /* 2. Get the param */
     const { data } = route.params;
-//   const { otherParam } = route.params;
+    //   const { otherParam } = route.params;
 
-  console.log('DEBUG 2: ', data)
+    console.log('DEBUG 2: ', data)
 
-  const postPastLooks = () => {
-    setTimeout(() => {
-        if(data != undefined) {
-            const _id = personData.forEach(element => {
-                element.id
-            });
-            if (data.id != _id) {
-                setData(current => [data, ...current]);
-                navigation.setParams({data: {}})
-            }   
-        }
+    const postPastLooks = () => {
+        setTimeout(() => {
+            if (data != undefined) {
+                const _id = personData.forEach(element => {
+                    element.id
+                });
+                if (data.id != _id) {
+                    setData(current => [data, ...current]);
+                    navigation.setParams({ data: {} })
+                }
+            }
 
-        if (propData.length !== 0) {
-           saveData() 
-        }
-        
-        console.log("Delayed for 1 second.");
-      }, "1000")
-  }
+            if (propData.length !== 0) {
+                saveData()
+            }
 
-  const saveData = async () => {
-    try {
-      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(propData))
-      console.log('Data successfully saved')
-    } catch (e) {
-      alert('Failed to save the data to the storage')
+            console.log("Delayed for 1 second.");
+        }, "1000")
     }
-    readData()
-  }
 
-  const readData = async () => {
-    try {
-      const value = await AsyncStorage.getItem(STORAGE_KEY);
-  
-      if (value !== null) {
-        console.log('READ DATA:', value)
-        setData(JSON.parse(value));
-      }
-    } catch (e) {
-      alert('Failed to fetch the input from storage');
+    const saveData = async () => {
+        try {
+            await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(propData))
+            console.log('Data successfully saved')
+        } catch (e) {
+            alert('Failed to save the data to the storage')
+        }
     }
-  };
+
+    const readData = async () => {
+        try {
+            const value = await AsyncStorage.getItem(STORAGE_KEY);
+
+            if (value !== null) {
+                console.log('READ DATA:', value)
+                setData(JSON.parse(value));
+            }
+        } catch (e) {
+            alert('Failed to fetch the input from storage');
+        }
+    };
 
     const onRefresh = async () => {
         setIsFetching(true);
         setTimeout(() => {
             console.log("Delayed for 5 second.");
-          }, "1000")
+        }, "1000")
         setIsFetching(false);
-      };
-    // console.log('DEBUG: ---->', propData)
+    };
+    console.log('DEBUG: ---->', propData)
 
     const renderItem = ({ item }) => (
         <View style={styles.container}>
@@ -96,23 +95,35 @@ export default function PastLooksScreen({ route, navigation }) {
     )
 
     useEffect(() => {
-        if (propData.length > 0) {
-            readData()
-         }
+        // if (propData.length > 0) {
+        //     readData()
+        //  }
 
         postPastLooks()
-      }, [data]);
+    }, [data]);
 
     return (
-        
-        <FlatList
-            style={styles.container}
-            data={propData}
-            renderItem={renderItem}
-            keyExtractor={personData.id}
-            onRefresh={onRefresh}
-            refreshing={isFetching}
-        />
+        <View style={styles.container}>
+            {
+                propData.length !== 0 ?
+
+                    <FlatList
+                        style={styles.container}
+                        data={propData}
+                        renderItem={renderItem}
+                        keyExtractor={personData.id}
+                        onRefresh={onRefresh}
+                        refreshing={isFetching}
+                    />
+                    :
+                    (
+                        <View style={styles.container__nodata}>
+                            <Text>It looks like you have no style... Post your fit!</Text>
+                        </View>
+
+                    )
+            }
+        </View>
     )
 }
 
@@ -120,6 +131,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+    },
+    container__nodata: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: 'center'
     },
     card: {
         backgroundColor: '#fff',
@@ -139,7 +155,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 300,
         resizeMode: 'contain'
-      },
+    },
     cardAvatar: {
         marginRight: 16,
         width: 45, height: 45,

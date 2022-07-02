@@ -1,7 +1,12 @@
 import 'react-native-gesture-handler';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, LogBox } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import BottomTab from './BottomTab';
+
+LogBox.ignoreLogs([
+"ViewPropTypes will be removed",
+"ColorPropType will be removed",
+])
 
 export default function App() {
   return (

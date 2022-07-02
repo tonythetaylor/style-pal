@@ -2,7 +2,8 @@ const brandData = [
     {
         'id': 1,
         'brand' : 'Nike',
-        url: 'https://static.stylight.net/brands/de/res/162/568.2.png'
+        url: 'https://static.stylight.net/brands/de/res/162/568.2.png',
+        site: 'https://www.nike.com'
     },
     {
         'id': 2,
