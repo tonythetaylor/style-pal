@@ -98,7 +98,7 @@ const HangupItemScreen = ({ navigation }) => {
         onChangeBrand('')
         onChangeBrandStyle('')
         onChangeColor('')
-        onChangeColor([])
+        onChangeColor('')
         // navigation.setParams({ data: null });
 
     }

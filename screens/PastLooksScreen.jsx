@@ -3,23 +3,67 @@ import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, RefreshContr
 import { Avatar } from 'react-native-elements';
 import personData from "../personData";
 import { useRoute } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+let STORAGE_KEY = '@propData';
 
 export default function PastLooksScreen({ route, navigation }) {
-    const _route = useRoute()
-    const [propData, setData] = useState(personData)
-    const [items, setItems] = useState([]);
+    const [propData, setData] = useState([])
     const [isFetching, setIsFetching] = useState(false);
       /* 2. Get the param */
-  const { data } = route.params;
+    const { data } = route.params;
 //   const { otherParam } = route.params;
 
   console.log('DEBUG 2: ', data)
+
+  const postPastLooks = () => {
+    setTimeout(() => {
+        if(data != undefined) {
+            const _id = personData.forEach(element => {
+                element.id
+            });
+            if (data.id != _id) {
+                setData(current => [data, ...current]);
+                navigation.setParams({data: {}})
+            }   
+        }
+
+        if (propData.length !== 0) {
+           saveData() 
+        }
+        
+        console.log("Delayed for 1 second.");
+      }, "1000")
+  }
+
+  const saveData = async () => {
+    try {
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(propData))
+      console.log('Data successfully saved')
+    } catch (e) {
+      alert('Failed to save the data to the storage')
+    }
+    readData()
+  }
+
+  const readData = async () => {
+    try {
+      const value = await AsyncStorage.getItem(STORAGE_KEY);
+  
+      if (value !== null) {
+        console.log('READ DATA:', value)
+        setData(JSON.parse(value));
+      }
+    } catch (e) {
+      alert('Failed to fetch the input from storage');
+    }
+  };
 
     const onRefresh = async () => {
         setIsFetching(true);
         setTimeout(() => {
             console.log("Delayed for 5 second.");
-          }, "5000")
+          }, "1000")
         setIsFetching(false);
       };
     // console.log('DEBUG: ---->', propData)
@@ -52,18 +96,11 @@ export default function PastLooksScreen({ route, navigation }) {
     )
 
     useEffect(() => {
-        setTimeout(() => {
-            if(data != undefined) {
-                const _id = personData.forEach(element => {
-                    element.id
-                });
-                if (data.id != _id) {
-                    setData(current => [data, ...current]);
-                    navigation.setParams({data: {}})
-                }   
-            }
-            console.log("Delayed for 1 second.");
-          }, "1000")
+        if (propData.length > 0) {
+            readData()
+         }
+
+        postPastLooks()
       }, [data]);
 
     return (
