@@ -3,6 +3,10 @@
     "name": "style-pal",
     "slug": "style-pal",
     "version": "1.0.0",
+    "splash": {
+      "image": "./assets/iPhone_13_Pro_Max__iPhone_12_Pro_Max_portrait.png",
+      "resizeMode": "contain"
+    },
     "assetBundlePatterns": [
       "**/*"
     ],

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, RefreshControl } from 'react-native'
-import { Avatar } from 'react-native-elements';
 import personData from "../personData";
-import { useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 let STORAGE_KEY = '@propData';

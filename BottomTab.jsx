@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, Button, TouchableOpacity, Image } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack';
@@ -9,9 +9,45 @@ import TodaysPicksScreen from './screens/TodaysPicksScreen';
 import PastLooksScreen from './screens/PastLooksScreen';
 import ClosetScreen from './screens/ClosetScreen';
 import CameraScreen from './screens/CameraScreen';
-import HangupItemScreen from './screens/HangupItemScreen';
-
+import HangupItemScreen from './screens/HangupItemScreen';;
+// import {ClthgLogoTitle} from './components/CustomHeaders';
 const CameraStack = createStackNavigator();
+
+const PastLooksLogoTitle = () => {
+    return (
+      <Image
+        style={{ width: 125, height: 125, resizeMode: 'contain'}}
+        source={require('./assets/past-looks.png')}
+      />
+    );
+}
+
+const ClthgLogoTitle = () => {
+    return (
+      <Image
+        style={{ width: 100, height: 100, resizeMode: 'contain'}}
+        source={require('./assets/CLTHG-logo.png')}
+      />
+    );
+}
+
+const TodaysPicksLogoTitle = () => {
+    return (
+      <Image
+        style={{ width: 150, height: 150, resizeMode: 'contain'}}
+        source={require('./assets/todays-picks.png')}
+      />
+    );
+}
+
+const AddStyleLogoTitle = () => {
+    return (
+      <Image
+        style={{ width: 175, height: 175, resizeMode: 'contain'}}
+        source={require('./assets/addStyle.png')}
+      />
+    );
+}
 
 function CameraStackScreen({ navigation }) {
     return (
@@ -29,7 +65,13 @@ function CameraStackScreen({ navigation }) {
                     </TouchableOpacity>
                 ),
             }}>
-            <CameraStack.Screen name="Closet" component={ClosetScreen} initialParams={{ data: {} }}
+            <CameraStack.Screen 
+            name="Closet"
+            options={{
+                headerTitle: (props) => (<ClthgLogoTitle {...props}  />),
+            }}
+            component={ClosetScreen} 
+            initialParams={{ data: {} }}
  />
             <CameraStack.Screen
                 name="Hanger"
@@ -56,6 +98,7 @@ const BottomTab = ({ navigation }) => {
                 initialParams={{ data: {} }}
                 options={{
                     tabBarLabel: '',
+                    headerTitle: (props) => (<PastLooksLogoTitle {...props} />),
                     tabBarIcon: ({ focused, size, color }) => (<Icon name={"home"} color={focused ? "#10498f" : "black"} size={24} />),
                     tabBarItemStyle: {
                         margin: 5,
@@ -86,6 +129,7 @@ const BottomTab = ({ navigation }) => {
                 component={TodaysPicksScreen}
                 options={({ route, navigation }) => ({ // transform screenOptions to a function
                     tabBarLabel: '',
+                    headerTitle: (props) => (<TodaysPicksLogoTitle {...props}  />),
                     tabBarIcon: ({ focused, size, color }) => (<FontAwesomeIcon icon={faShirt} color={focused ? "#10498f" : "black"} size={24} />),
                     tabBarItemStyle: {
                         margin: 5,
@@ -113,6 +157,7 @@ const BottomTab = ({ navigation }) => {
                 component={CameraScreen}
                 options={{
                     tabBarLabel: '',
+                    headerTitle: (props) => (<AddStyleLogoTitle {...props}  />),
                     tabBarIcon: ({ focused, size, color }) => (<FontAwesomeIcon icon={faCameraAlt} color={focused ? "#10498f" : "black"} size={24} />),
                     tabBarItemStyle: {
                         margin: 5,
