@@ -73,13 +73,18 @@ const ClosetMainView = ({ route, navigation }) => {
    }
     
     const pickItem = (item) => {
+        // place non unique id's into an empty array
+        let matchId = []
         for(const prop in items) {
             if (items[prop].id === item.id) {
                 alert(`${item.style} is already selected`)
-                items.pop(item)
-            }
+                matchId.push(items[prop].id)
+            } 
         }
-        setItems(arr => [item, ...arr])
+        // if the selected id doesnt match, add the item to the items array
+        if (matchId != item.id) {
+            setItems(arr => [item, ...arr])
+        }
     }
 
     const hangItemUp = (item) => {
