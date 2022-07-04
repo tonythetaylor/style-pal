@@ -91,7 +91,7 @@ const CameraScreen = ({ navigation }) => {
             }
         }
         
-        navigation.navigate('Past Looks', {...d})
+        navigation.navigate('Past Looks Screen', {...d})
         // console.log(brandStyle, itemColor, brand, pickedImagePath)
         setPickedImagePath('')
         setPickedImagePath('')

@@ -10,7 +10,7 @@ export default function PastLooksScreen({ route, navigation }) {
     const [isFetching, setIsFetching] = useState(false);
     /* 2. Get the param */
     const { data } = route.params;
-    //   const { otherParam } = route.params;
+      console.log('PAST LOOKS', route)
 
     console.log('DEBUG 2: ', data)
 
