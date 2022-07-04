@@ -10,7 +10,7 @@ export default function PastLooksScreen({ route, navigation }) {
     const [isFetching, setIsFetching] = useState(false);
     /* 2. Get the param */
     const { data } = route.params;
-      console.log('PAST LOOKS', route)
+    console.log('PAST LOOKS', route)
 
     console.log('DEBUG 2: ', data)
 
@@ -73,7 +73,7 @@ export default function PastLooksScreen({ route, navigation }) {
                     style={styles.cardImage}
                 />
                 <View style={styles.cardHeader}>
-                    <Text category='s1' style={styles.cardTitle}>
+                    <Text category='s1' style={styles.cardBrand}>
                         {item.brand}
                     </Text>
                     <TouchableOpacity
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     },
     card: {
         backgroundColor: '#fff',
-        marginBottom: 25,
+        marginBottom: -55,
         paddingTop: 5
     },
     cardHeader: {
@@ -148,6 +148,11 @@ const styles = StyleSheet.create({
     },
     cardTitle: {
         color: '#000',
+        bottom: 40
+    },
+    cardBrand: {
+        color: '#000',
+        bottom: 40
     },
     cardImage: {
         width: '100%',
@@ -155,15 +160,20 @@ const styles = StyleSheet.create({
         resizeMode: 'contain'
     },
     cardAvatar: {
-        marginRight: 16,
+        zIndex: 1,
+        marginRight: 0,
         width: 45, height: 45,
-        resizeMode: 'contain',
-        borderRadius: 180 / 2
+        resizeMode: 'flex',
+        borderRadius: 180 / 2,
+        bottom: 55,
+        marginRight: 0
     },
     cardContent: {
+        zIndex: 1,
+        bottom: 55,
         padding: 10,
-        borderBottomWidth: 0.25,
-        borderTopWidth: 0.25,
-        borderColor: 'grey'
+        borderBottomWidth: .4,
+        // borderTopWidth: 1,
+        borderColor: 'black'
     }
 })

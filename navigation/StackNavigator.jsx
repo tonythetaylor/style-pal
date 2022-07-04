@@ -11,6 +11,8 @@ import PastLooksScreen from '../screens/PastLooksScreen';
 import ClosetScreen from '../screens/ClosetScreen';
 import CameraScreen from '../screens/CameraScreen';
 import HangupItemScreen from '../screens/HangupItemScreen';
+import StylistScreen from "../screens/StylistScreen";
+import SearchScreen from "../screens/SearchScreen";
 
 const PastLooksLogoTitle = () => {
     return (
@@ -87,7 +89,7 @@ function CameraStackNavigator({ navigation }) {
 
 const Stack = createStackNavigator();
 
-const MainStackNavigator = ({navigation}) => {
+const MainStackNavigator = ({ navigation }) => {
     return (
         <Stack.Navigator
             screenOptions={{
@@ -171,12 +173,12 @@ const CameraNavigator = () => {
                 headerBackTitle: "Back",
                 // headerShown: false,
             }}>
-            <Camera.Screen 
-                name="Camera Screen" 
+            <Camera.Screen
+                name="Camera Screen"
                 component={CameraScreen}
                 options={{
                     tabBarLabel: '',
-                    headerTitle: (props) => (<AddStyleLogoTitle {...props}  />),
+                    headerTitle: (props) => (<AddStyleLogoTitle {...props} />),
                     tabBarIcon: ({ focused, size, color }) => (<FontAwesomeIcon icon={faCameraAlt} color={focused ? "#10498f" : "black"} size={24} />),
                     tabBarItemStyle: {
                         margin: 5,
@@ -189,4 +191,60 @@ const CameraNavigator = () => {
     );
 }
 
-export { MainStackNavigator, TodaysPicksStackNavigator, ClosetStackNavigator, CameraNavigator };
+const Search = createStackNavigator();
+
+const SearchStackNavigator = () => {
+    return (
+        <Search.Navigator
+            screenOptions={{
+                headerShown: true,
+                headerTintColor: "white",
+                headerBackTitle: "Back",
+            }}>
+            <Search.Screen name="Search Screen" component={SearchScreen} />
+
+        </Search.Navigator>
+    );
+}
+
+const Stylist = createStackNavigator();
+
+const StylistStackNavigator = () => {
+    return (
+        <Stylist.Navigator
+            screenOptions={{
+                headerShown: true,
+                headerTintColor: "white",
+                headerBackTitle: "Back",
+            }}>
+            <Stylist.Screen name="Stylist Screen" component={StylistScreen} />
+
+        </Stylist.Navigator>
+    );
+}
+
+const Events = createStackNavigator();
+
+const EventsStackNavigator = () => {
+    return (
+        <Events.Navigator
+            screenOptions={{
+                headerShown: true,
+                headerTintColor: "white",
+                headerBackTitle: "Back",
+            }}>
+            <Events.Screen name="Stylist Screen" component={EventsScreen} />
+
+        </Events.Navigator>
+    );
+}
+
+export {
+    MainStackNavigator,
+    TodaysPicksStackNavigator,
+    ClosetStackNavigator,
+    CameraNavigator,
+    StylistStackNavigator,
+    SearchStackNavigator,
+    EventsStackNavigator
+};

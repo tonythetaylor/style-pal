@@ -2,21 +2,23 @@ import React from "react";
 
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
-import { ContactStackNavigator } from "./StackNavigator";
+import { ContactStackNavigator, EventsStackNavigator, SearchStackNavigator, StylistStackNavigator } from "./StackNavigator";
 import TabNavigator from "./TabNavigator";
 
 const Drawer = createDrawerNavigator();
 
 const DrawerNavigator = () => {
   return (
-    <Drawer.Navigator 
+    <Drawer.Navigator
       screenOptions={{
-                headerShown: false,
-                headerTintColor: "white",
-                headerBackTitle: "Back",
-            }}>
+        headerShown: false,
+        headerTintColor: "white",
+        headerBackTitle: "Back",
+      }}>
+      <Drawer.Screen name="Search" component={SearchStackNavigator} />
       <Drawer.Screen name="Home" component={TabNavigator} />
-      {/* <Drawer.Screen name="Contact" component={ContactStackNavigator} /> */}
+      <Drawer.Screen name="Stylist" component={StylistStackNavigator} />
+      <Drawer.Screen name="Events" component={EventsStackNavigator} />
     </Drawer.Navigator>
   );
 }
