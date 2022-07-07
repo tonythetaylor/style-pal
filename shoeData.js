@@ -1,5 +1,6 @@
 const shoeData = [
     {
+        'id': 1,
         'style': 'The Jack Boot in Dark Sky',
         'colorway': 'Black',
         'release': 2022,
@@ -7,6 +8,7 @@ const shoeData = [
         url: 'https://cdn.shopify.com/s/files/1/0468/9441/products/Samples---Q3-150-2048px.jpg?v=1655240624&width=1920'
     },
     {
+        'id': 2,
         'style': 'Air Jordan 1 Retro High Og Chicago High Quality E11',
         'colorway': 'White/Black-Red',
         'release': 1986,
@@ -14,6 +16,7 @@ const shoeData = [
         url : 'https://wooshopbase.nyc3.digitaloceanspaces.com/Air%2BJordan%2B1%2BRetro%2BHigh%2BOg%2BChicago%2BHigh%2BQuality%2BE11-2151-icCH9.jpg'
     },
     {
+        'id': 3,
         'style': 'Monetto',
         'colorway': 'White / Black - Red',
         'release': 1994,
@@ -21,6 +24,7 @@ const shoeData = [
         url: 'https://media.aldoshoes.com/v3/product/monetto/220-001-043/monetto_brown_220-001-043_alt5_sq_nt_1600x1600.jpg'
     },
     {
+        'id': 4,
         'style': '132202 - 101',
         'colorway': 'Green / Black',
         'release': 2000,

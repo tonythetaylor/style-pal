@@ -8,22 +8,25 @@ import { Input } from 'react-native-elements';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faPaperPlane, faCancel } from '@fortawesome/free-solid-svg-icons'
 import { TextInput } from 'react-native-paper';
+import SelectDropdown from 'react-native-select-dropdown'
 
 import uuid from 'react-native-uuid';
+
+const clothingItems = ["Shirt", "Pants", "Shoes"]
 
 const ShowImagePicker = ({ renderItem }) => (
     <View renderItem={renderItem} style={{ width: 10, height: 15, marginLeft: 1, marginTop: 1 }}>
     </View>
 );
 
-const CameraScreen = ({ navigation }) => {
+const HangupItemScreen = ({ navigation }) => {
     // The path of the picked image
     const [pickedImagePath, setPickedImagePath] = useState('');
     const [brand, onChangeBrand] = useState("");
     const [brandStyle, onChangeBrandStyle] = useState("");
     const [itemColor, onChangeColor] = useState("");
     const [itemSize, onChangeSize] = useState("");
-    const [backgroundColor, setBackgroundColor] = useState()
+    const [selection, setSelection] = useState([])
 
     // useEffect(() => {
     //    setPickedImagePath('')
@@ -87,18 +90,21 @@ const CameraScreen = ({ navigation }) => {
                 colorway: itemColor,
                 release: 2022,
                 brand: brand,
-                url: pickedImagePath
+                url: pickedImagePath,
+                type: selection,
+
             }
         }
-        
-        navigation.navigate('Past Looks Screen', {...d})
+
+        navigation.navigate('Closet', { ...d })
         // console.log(brandStyle, itemColor, brand, pickedImagePath)
         setPickedImagePath('')
         setPickedImagePath('')
         onChangeBrand('')
         onChangeBrandStyle('')
         onChangeColor('')
-        navigation.setParams({ data: null });
+        onChangeColor('')
+        // navigation.setParams({ data: null });
 
     }
 
@@ -106,10 +112,10 @@ const CameraScreen = ({ navigation }) => {
         <View style={styles.screen}>
             <View style={styles.buttonContainer}>
                 <View style={styles.button} >
-                    <Button onPress={showImagePicker} title="Select an image" color="#fff"/>
+                    <Button onPress={showImagePicker} title="Select an image" color="#fff" />
                 </View>
                 <View style={styles.button} >
-                <Button onPress={openCamera} title="Open camera" color="#fff" />
+                    <Button onPress={openCamera} title="Open camera" color="#fff" />
                 </View>
             </View>
 
@@ -167,6 +173,23 @@ const CameraScreen = ({ navigation }) => {
                                 selectionColor="black"
                                 activeOutlineColor="black"
                             />
+                            <SelectDropdown
+                                data={clothingItems}
+                                onSelect={(selectedItem, index) => {
+                                    console.log(selectedItem, index)
+                                    setSelection(selectedItem)
+                                }}
+                                buttonTextAfterSelection={(selectedItem, index) => {
+                                    // text represented after item is selected
+                                    // if data array is an array of objects then return selectedItem.property to render after item is selected
+                                    return selectedItem
+                                }}
+                                rowTextForSelection={(item, index) => {
+                                    // text represented for each item in dropdown
+                                    // if data array is an array of objects then return item.property to represent item in dropdown
+                                    return item
+                                }}
+                            />
                         </SafeAreaView>
                     }
                 </View>
@@ -174,12 +197,12 @@ const CameraScreen = ({ navigation }) => {
             <ShowImagePicker style={styles.screen} renderItem={showImagePicker} />
 
             <View style={styles.buttonContainer}>
-            { pickedImagePath !== '' ?
-                <TouchableOpacity onPress={sendData} style={{ padding: 10, paddingLeft: 15 }}>
-                    <FontAwesomeIcon icon={faPaperPlane} size={23} color={"#000"} />
-                </TouchableOpacity>
-                : []
-            }
+                {pickedImagePath !== '' ?
+                    <TouchableOpacity onPress={sendData} style={{ padding: 10, paddingLeft: 15 }}>
+                        <FontAwesomeIcon icon={faPaperPlane} size={23} color={"#000"} />
+                    </TouchableOpacity>
+                    : []
+                }
                 <TouchableOpacity onPress={() => removeImagepath()} style={{ padding: 10, paddingLeft: 15 }}>
                     <FontAwesomeIcon icon={faCancel} size={23} color={"#000"} />
                 </TouchableOpacity>
@@ -253,4 +276,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default CameraScreen
+export default HangupItemScreen
