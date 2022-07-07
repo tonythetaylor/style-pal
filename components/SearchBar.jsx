@@ -24,6 +24,7 @@ const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setClicked}) => {
         <TextInput
           style={styles.input}
           placeholder="Search"
+          placeholderTextColor={'#000'}
           value={searchPhrase}
           onChangeText={setSearchPhrase}
           onFocus={() => {
@@ -67,10 +68,10 @@ const styles = StyleSheet.create({
   searchBar__unclicked: {
     padding: 10,
     flexDirection: "row",
-    width: "95%",
+    width: "100%",
     backgroundColor: "#d9dbda",
     borderRadius: 15,
-    alignItems: "center",
+    alignItems: "center"
   },
   searchBar__clicked: {
     padding: 10,
