@@ -128,7 +128,7 @@ export default function PastLooksScreen({ route, navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#fff'        
     },
     container__nodata: {
         flex: 1,
@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     },
     cardBrand: {
         color: '#000',
-        bottom: 40
+        bottom: 20
     },
     cardImage: {
         width: '100%',
@@ -162,18 +162,22 @@ const styles = StyleSheet.create({
     cardAvatar: {
         zIndex: 1,
         marginRight: 0,
-        width: 45, height: 45,
-        resizeMode: 'flex',
+        width: 45, 
+        height: 45,
         borderRadius: 180 / 2,
-        bottom: 55,
-        marginRight: 0
+        bottom: 60,
+        marginRight: 0,
+        borderColor: 'white',
+        borderWidth: 2
     },
     cardContent: {
         zIndex: 1,
         bottom: 55,
         padding: 10,
-        borderBottomWidth: .4,
+        borderBottomWidth: 2,
         // borderTopWidth: 1,
-        borderColor: 'black'
+        borderColor: '#3d3d3d', 
+        // opacity: 2,
+        shadowOpacity: .20
     }
 })

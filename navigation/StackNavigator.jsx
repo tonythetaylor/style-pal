@@ -13,6 +13,8 @@ import CameraScreen from '../screens/CameraScreen';
 import HangupItemScreen from '../screens/HangupItemScreen';
 import StylistScreen from "../screens/StylistScreen";
 import SearchScreen from "../screens/SearchScreen";
+import EventsScreen from "../screens/EventsScreen";
+import DrawerScreenContent from "../screens/DrawerScreenContent";
 
 const PastLooksLogoTitle = () => {
     return (
@@ -239,6 +241,22 @@ const EventsStackNavigator = () => {
     );
 }
 
+const DrawerContent = createStackNavigator();
+
+const DrawerContentStackNavigator = () => {
+    return (
+        <DrawerContent.Navigator
+            screenOptions={{
+                headerShown: true,
+                headerTintColor: "white",
+                headerBackTitle: "Back",
+            }}>
+            <DrawerContent.Screen name="Stylist Screen" component={DrawerScreenContent} />
+
+        </DrawerContent.Navigator>
+    );
+}
+
 export {
     MainStackNavigator,
     TodaysPicksStackNavigator,
@@ -246,5 +264,6 @@ export {
     CameraNavigator,
     StylistStackNavigator,
     SearchStackNavigator,
-    EventsStackNavigator
+    EventsStackNavigator,
+    DrawerContentStackNavigator
 };
