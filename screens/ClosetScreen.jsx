@@ -1,5 +1,5 @@
-import React, {useCallback} from 'react'
-import { View, Text, StyleSheet, Image, ScrollView, Button, Linking } from 'react-native'
+import React, { useCallback } from 'react'
+import { View, Text, StyleSheet, Image, ScrollView, Button, SafeAreaView, TouchableOpacity } from 'react-native'
 import { FlatGrid } from 'react-native-super-grid';
 
 import ClosetMainView from '../components/ClosetMainView';
@@ -8,13 +8,22 @@ import shoeData from "../shoeData";
 import shirtData from "../topdata";
 import brandData from "../brandData";
 import ClosetGridView from '../components/ClosetGridView';
-import { TouchableOpacity } from 'react-native-web';;
 
 export default function ClosetScreen({ route, navigation }) {
     const [items, setItems] = React.useState([shirtData]);
 
+    const handlerLongClick = () => {
+        //handler for Long Click
+        alert('Button Long Pressed');
+    };
+    
+    const handlerClick = () => {
+        //handler for Long Click
+        alert('Button Clicked!');
+    };
+
     return (
-        <>
+        <SafeAreaView style={{ flex: 1 }}>
             <View style={[
                 styles.container__header, {
                     flexDirection: "row",
@@ -23,9 +32,14 @@ export default function ClosetScreen({ route, navigation }) {
                     {brandData.map((item, idx) =>
                         <View key={idx}
                             style={styles.container__header__scrollview}>
-                                
+                            <TouchableOpacity
+                                onLongPress={handlerLongClick}
+                                onPress={handlerClick}
+                                activeOpacity={0.6}>
+
                                 <Image style={styles.container__header__scrollview__image} source={{ uri: item.url }} />
                                 {/* <Text style={styles.container__header__scrollview__text}>Brand Name</Text> */}
+                            </TouchableOpacity>
                         </View>
                     )}
                 </ScrollView>
@@ -33,7 +47,8 @@ export default function ClosetScreen({ route, navigation }) {
 
             <ClosetMainView route={route} navigation={navigation} />
             {/* <ClosetGridView/> */}
-        </>
+        {/* </> */}
+        </SafeAreaView>
     );
 }
 

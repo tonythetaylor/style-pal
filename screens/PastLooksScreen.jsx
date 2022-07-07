@@ -31,7 +31,7 @@ export default function PastLooksScreen({ route, navigation }) {
             }
 
             console.log("Delayed for 1 second.");
-        }, "1000")
+        }, 1000)
     }
 
     const saveData = async () => {
@@ -60,7 +60,7 @@ export default function PastLooksScreen({ route, navigation }) {
         setIsFetching(true);
         setTimeout(() => {
             console.log("Delayed for 5 second.");
-        }, "1000")
+        }, 1000)
         setIsFetching(false);
     };
     console.log('DEBUG: ---->', propData)

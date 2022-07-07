@@ -2,11 +2,11 @@ import React from "react";
 import { StyleSheet, View, Text, Button, TouchableOpacity, Image } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faDoorOpen, faCameraAlt, faShirt, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faDoorOpen, faCameraAlt, faShirt, faPlus, faSearch, faCamera } from '@fortawesome/free-solid-svg-icons'
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import CameraScreen from '../screens/CameraScreen';
 
-import { MainStackNavigator, TodaysPicksStackNavigator, ClosetStackNavigator, CameraNavigator } from "./StackNavigator";
+import { MainStackNavigator, TodaysPicksStackNavigator, ClosetStackNavigator, CameraNavigator, SearchStackNavigator } from "./StackNavigator";
 
 const PastLooksLogoTitle = () => {
     return (
@@ -55,11 +55,11 @@ const BottomTabNavigator = (navigation) => {
         headerMode: 'screen',
         headerTintColor: 'black',
         //   headerStyle: { backgroundColor: 'tomato' },
-        headerRight: () => (
-            <TouchableOpacity onPress={() => navigation.navigate('Hanger')} style={{ padding: 10, paddingLeft: 15 }}>
-                <FontAwesomeIcon icon={faPlus} size={23} color={"#000"} />
-            </TouchableOpacity>
-        ),
+        // headerRight: () => (
+        //     <TouchableOpacity onPress={() => navigation.navigate('Hanger')} style={{ padding: 10, paddingLeft: 15 }}>
+        //         <FontAwesomeIcon icon={faPlus} size={23} color={"#000"} />
+        //     </TouchableOpacity>
+        // ),
     }}>
       <Tab.Screen 
       name="Past Looks" 
@@ -77,6 +77,22 @@ const BottomTabNavigator = (navigation) => {
               top: 10
           }
       }}/>
+      <Tab.Screen
+      name='Search'
+      component={SearchStackNavigator}
+      options={{
+        headerShown: true,
+          tabBarLabel: '',
+        //   headerTitle: (props) => (<PastLooksLogoTitle {...props} />),
+          tabBarIcon: ({ focused, size, color }) => (<FontAwesomeIcon icon={faSearch} color={focused ? "#10498f" : "black"} size={24} />),
+          tabBarItemStyle: {
+              margin: 5,
+              borderRadius: 16,
+              top: 10
+          }
+      }}>
+
+      </Tab.Screen>
       <Tab.Screen 
       name="Closet" 
       component={ClosetStackNavigator}
@@ -115,7 +131,7 @@ const BottomTabNavigator = (navigation) => {
         )
     })}
      />
-      <Tab.Screen  
+      {/* <Tab.Screen  
                 name={'+Style'}
                 component={CameraNavigator}
                 options={{
@@ -128,7 +144,7 @@ const BottomTabNavigator = (navigation) => {
                         borderRadius: 16,
                         top: 10
                     }
-                }} />
+                }} /> */}
     </Tab.Navigator>
   );
 };

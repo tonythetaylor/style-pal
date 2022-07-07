@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View, Text, Button, TouchableOpacity, Image } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faDoorOpen, faCameraAlt, faShirt, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faDoorOpen, faCameraAlt, faShirt, faPlus, faCameraRetro } from '@fortawesome/free-solid-svg-icons'
 
 import { createStackNavigator } from "@react-navigation/stack";
 
@@ -15,6 +15,7 @@ import StylistScreen from "../screens/StylistScreen";
 import SearchScreen from "../screens/SearchScreen";
 import EventsScreen from "../screens/EventsScreen";
 import DrawerScreenContent from "../screens/DrawerScreenContent";
+import BottomTabNavigator from "./TabNavigator";
 
 const PastLooksLogoTitle = () => {
     return (
@@ -64,16 +65,16 @@ function CameraStackNavigator({ navigation }) {
                 headerMode: 'screen',
                 headerTintColor: 'black',
                 //   headerStyle: { backgroundColor: 'tomato' },
-                headerRight: () => (
-                    <TouchableOpacity onPress={() => navigation.navigate('Hanger')} style={{ padding: 10, paddingLeft: 15 }}>
-                        <FontAwesomeIcon icon={faPlus} size={23} color={"#000"} />
-                    </TouchableOpacity>
-                ),
             }}>
             <CameraStack.Screen
                 name="Closet"
                 options={{
                     headerTitle: (props) => (<ClthgLogoTitle {...props} />),
+                    headerRight: () => (
+                        <TouchableOpacity onPress={() => navigation.navigate('Hanger')} style={{ padding: 10, paddingLeft: 15 }}>
+                            <FontAwesomeIcon icon={faCameraRetro} size={23} color={"#000"} />
+                        </TouchableOpacity>
+                    ),
                 }}
                 component={ClosetScreen}
                 initialParams={{ data: {} }}
@@ -98,6 +99,11 @@ const MainStackNavigator = ({ navigation }) => {
                 headerShown: true,
                 headerTintColor: "white",
                 headerBackTitle: "Back",
+                headerRight: () => (
+                    <TouchableOpacity onPress={() => navigation.navigate('Add Style')} style={{ padding: 10, paddingLeft: 15 }}>
+                        <FontAwesomeIcon icon={faCameraRetro} size={23} color={"#000"} />
+                    </TouchableOpacity>
+                ),
             }}>
             <Stack.Screen
                 name="Past Looks Screen"
@@ -113,6 +119,13 @@ const MainStackNavigator = ({ navigation }) => {
                         top: 10
                     }
                 }} />
+                <Stack.Screen
+                name={'Add Style'}
+                component={CameraNavigator}
+                options={{
+                    headerShown: false,
+                    headerTitle: (props) => (<AddStyleLogoTitle {...props} />),
+                }}/>
         </Stack.Navigator>
     );
 }
@@ -139,11 +152,11 @@ const TodaysPicksStackNavigator = () => {
                         borderRadius: 16,
                         top: 10
                     },
-                    headerRight: () => (
-                        <TouchableOpacity onPress={() => navigation.navigate('+Style')} style={{ padding: 10, paddingLeft: 15 }}>
-                            <FontAwesomeIcon icon={faPlus} size={23} color={"#000"} />
-                        </TouchableOpacity>
-                    )
+                    // headerRight: () => (
+                    //     <TouchableOpacity onPress={() => navigation.navigate('+Style')} style={{ padding: 10, paddingLeft: 15 }}>
+                    //         <FontAwesomeIcon icon={faPlus} size={23} color={"#000"} />
+                    //     </TouchableOpacity>
+                    // )
                 })} />
         </TodaysPicks.Navigator>
     );
@@ -171,15 +184,16 @@ const CameraNavigator = () => {
     return (
         <Camera.Navigator
             screenOptions={{
-                headerTintColor: "white",
+                headerTintColor: "black",
                 headerBackTitle: "Back",
-                // headerShown: false,
+                headerShown: true,
+                headerBackTitleVisible: true,
             }}>
             <Camera.Screen
                 name="Camera Screen"
                 component={CameraScreen}
                 options={{
-                    tabBarLabel: '',
+                    
                     headerTitle: (props) => (<AddStyleLogoTitle {...props} />),
                     tabBarIcon: ({ focused, size, color }) => (<FontAwesomeIcon icon={faCameraAlt} color={focused ? "#10498f" : "black"} size={24} />),
                     tabBarItemStyle: {
@@ -199,11 +213,15 @@ const SearchStackNavigator = () => {
     return (
         <Search.Navigator
             screenOptions={{
-                headerShown: true,
+                headerShown: false,
                 headerTintColor: "white",
                 headerBackTitle: "Back",
             }}>
-            <Search.Screen name="Search Screen" component={SearchScreen} />
+            {/* <Search.Screen name="Search Screen" component={BottomTabNavigator} /> */}
+            <Search.Screen
+                name="Search Screen"
+                component={SearchScreen}
+            />
 
         </Search.Navigator>
     );

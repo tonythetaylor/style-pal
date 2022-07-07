@@ -1,68 +1,64 @@
-import React, { useEffect, useState } from 'react'
-import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, RefreshControl } from 'react-native'
-import personData from "../personData";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  Text,
+  SafeAreaView,
+  ActivityIndicator,
+} from "react-native";
+import List from "../components/List";
+import SearchBar from "../components/SearchBar";
 
-let STORAGE_KEY = '@propData';
+const SearchScreen = () => {
+  const [searchPhrase, setSearchPhrase] = useState("");
+  const [clicked, setClicked] = useState(false);
+  const [fakeData, setFakeData] = useState();
 
-export default function SearchScreen({ route, navigation }) {
+  // get data from the fake api endpoint
+  useEffect(() => {
+    const getData = async () => {
+      const apiResponse = await fetch(
+        "https://my-json-server.typicode.com/kevintomas1995/logRocket_searchBar/languages"
+      );
+      const data = await apiResponse.json();
+      setFakeData(data);
+    };
+    getData();
+  }, []);
 
-    return (
-        <View >
-            <Text>Search Screen</Text>
-        </View>
-    )
-}
+  return (
+    <SafeAreaView style={styles.root}>
+      {!clicked}
+      <SearchBar
+        searchPhrase={searchPhrase}
+        setSearchPhrase={setSearchPhrase}
+        clicked={clicked}
+        setClicked={setClicked}
+      />
+      {(
+
+          <List
+            searchPhrase={searchPhrase}
+            data={fakeData}
+            setClicked={setClicked}
+          />
+
+      )}
+    </SafeAreaView>
+  );
+};
+
+export default SearchScreen;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 3,
-        backgroundColor: '#fff',
-    },
-    container__nodata: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: 'center'
-    },
-    card: {
-        backgroundColor: '#fff',
-        marginBottom: -55,
-        paddingTop: 5
-    },
-    cardHeader: {
-        padding: 10,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
-    cardTitle: {
-        color: '#000',
-        bottom: 40
-    },
-    cardBrand: {
-        color: '#000',
-        bottom: 40
-    },
-    cardImage: {
-        width: '100%',
-        height: 300,
-        resizeMode: 'contain'
-    },
-    cardAvatar: {
-        zIndex: 1,
-        marginRight: 0,
-        width: 45, height: 45,
-        resizeMode: 'flex',
-        borderRadius: 180 / 2,
-        bottom: 55,
-        marginRight: 0
-    },
-    cardContent: {
-        zIndex: 1,
-        bottom: 55,
-        padding: 10,
-        borderBottomWidth: .4,
-        // borderTopWidth: 1,
-        borderColor: 'black'
-    }
-})
+  root: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  title: {
+    width: "100%",
+    marginTop: 20,
+    fontSize: 25,
+    fontWeight: "bold",
+    marginLeft: "10%",
+  },
+});
