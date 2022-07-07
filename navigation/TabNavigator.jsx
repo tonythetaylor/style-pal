@@ -81,7 +81,7 @@ const BottomTabNavigator = (navigation) => {
       name='Search'
       component={SearchStackNavigator}
       options={{
-        headerShown: true,
+        headerShown: false,
           tabBarLabel: '',
         //   headerTitle: (props) => (<PastLooksLogoTitle {...props} />),
           tabBarIcon: ({ focused, size, color }) => (<FontAwesomeIcon icon={faSearch} color={focused ? "#10498f" : "black"} size={24} />),

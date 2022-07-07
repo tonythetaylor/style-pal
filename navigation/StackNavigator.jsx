@@ -53,6 +53,15 @@ const AddStyleLogoTitle = () => {
     );
 }
 
+const SearchLogoTitle = () => {
+    return (
+        <Image
+            style={{ width: 100, height: 100, resizeMode: 'contain' }}
+            source={require('../assets/search.png')}
+        />
+    );
+}
+
 const CameraStack = createStackNavigator();
 
 function CameraStackNavigator({ navigation }) {
@@ -213,9 +222,10 @@ const SearchStackNavigator = () => {
     return (
         <Search.Navigator
             screenOptions={{
-                headerShown: false,
+                headerShown: true,
                 headerTintColor: "white",
                 headerBackTitle: "Back",
+                 headerTitle: (props) => (<SearchLogoTitle {...props} />),
             }}>
             {/* <Search.Screen name="Search Screen" component={BottomTabNavigator} /> */}
             <Search.Screen
