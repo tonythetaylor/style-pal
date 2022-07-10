@@ -10,9 +10,9 @@ export default function PastLooksScreen({ route, navigation }) {
     const [isFetching, setIsFetching] = useState(false);
     /* 2. Get the param */
     const { data } = route.params;
-    console.log('PAST LOOKS', route)
+    // console.log('PAST LOOKS', route)
 
-    console.log('DEBUG 2: ', data)
+    // console.log('DEBUG 2: ', data)
 
     const postPastLooks = () => {
         setTimeout(() => {
@@ -30,7 +30,7 @@ export default function PastLooksScreen({ route, navigation }) {
                 saveData()
             }
 
-            console.log("Delayed for 1 second.");
+            // console.log("Delayed for 1 second.");
         }, 1000)
     }
 
@@ -63,7 +63,7 @@ export default function PastLooksScreen({ route, navigation }) {
         }, 1000)
         setIsFetching(false);
     };
-    console.log('DEBUG: ---->', propData)
+    // console.log('DEBUG: ---->', propData)
 
     const renderItem = ({ item }) => (
         <View style={styles.container}>
