@@ -202,7 +202,6 @@ const CameraNavigator = () => {
                 name="Camera Screen"
                 component={CameraScreen}
                 options={{
-                    
                     headerTitle: (props) => (<AddStyleLogoTitle {...props} />),
                     tabBarIcon: ({ focused, size, color }) => (<FontAwesomeIcon icon={faCameraAlt} color={focused ? "#10498f" : "black"} size={24} />),
                     tabBarItemStyle: {

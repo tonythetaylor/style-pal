@@ -106,13 +106,10 @@ const styles = StyleSheet.create({
     borderRadius: 50
   },
   control__text: {
-    // flex: 1,
-    // width: '100%',
     padding: 5,
     alignItems: 'center',
     justifyContent: 'center',
     color: 'white'
-    // backgroundColor: 'blue'
   },
 
   error: {
@@ -120,7 +117,9 @@ const styles = StyleSheet.create({
     padding: 10,
     color: '#fff',
     backgroundColor: '#D54826FF',
-    width: '100%'
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
 

@@ -21,23 +21,29 @@ const ClthgLogoTitle = () => {
 
 export default function AuthStack() {
 
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {/* <Stack.Screen name="Welcome" component={WelcomeScreen} /> */}
-        <Stack.Screen 
-        name="Sign In" 
-        component={SignInScreen}
-        options={{
-            headerTitle: (props) => (<ClthgLogoTitle {...props} />)
-        }} />
-        <Stack.Screen 
-        name="Sign Up" 
-        component={SignOutScreen}
-        options={{
-            headerTitle: (props) => (<ClthgLogoTitle {...props} />)
-        }} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+    return (
+        <NavigationContainer>
+            <Stack.Navigator 
+            screenOptions={{
+                headerTintColor: "black",
+                headerBackTitle: "Back",
+                headerShown: true,
+                headerBackTitleVisible: true,
+            }}>
+                {/* <Stack.Screen name="Welcome" component={WelcomeScreen} /> */}
+                <Stack.Screen
+                    name="Sign In"
+                    component={SignInScreen}
+                    options={{
+                        headerTitle: (props) => (<ClthgLogoTitle {...props} />)
+                    }} />
+                <Stack.Screen
+                    name="Sign Up"
+                    component={SignOutScreen}
+                    options={{
+                        headerTitle: (props) => (<ClthgLogoTitle {...props} />)
+                    }} />
+            </Stack.Navigator>
+        </NavigationContainer>
+    );
 }

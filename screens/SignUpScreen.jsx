@@ -21,7 +21,7 @@ const SignUpScreen = ({ navigation }) => {
     if (email === '' || password === '' || displayName === '') {
       setError([
         ...error,
-        'Email username and password are mandatory.'
+        'Email, username and password are mandatory.'
       ])
       return;
     }
@@ -172,7 +172,9 @@ const styles = StyleSheet.create({
     padding: 10,
     color: '#fff',
     backgroundColor: '#D54826FF',
-    width: '100%'
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 });
 

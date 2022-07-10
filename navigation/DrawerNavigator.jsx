@@ -33,7 +33,7 @@ function AppDrawerContent(props) {
           }}
         >
           <View>
-          <Text>{user?.displayName}</Text>
+          <Text>{user?.displayName.toLowerCase()}</Text>
           </View>
           <Image
             source={{

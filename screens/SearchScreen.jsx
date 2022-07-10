@@ -51,8 +51,10 @@ export default SearchScreen;
 
 const styles = StyleSheet.create({
   root: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: 'white'
   },
   title: {
     width: "100%",
