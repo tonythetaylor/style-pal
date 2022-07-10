@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button } from 'react-native-elements';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -10,13 +10,7 @@ import { async } from '@firebase/util';
 const auth = getAuth();
 
 const SignUpScreen = ({ navigation }) => {
-  const [value, setValue] = useState({
-    displayName: '',
-    email: '',
-    password: '',
-    error: ''
-  })
-
+  const [user, setUser] = useState(auth.currentUser);
   const [displayName, setDisplayName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -24,12 +18,14 @@ const SignUpScreen = ({ navigation }) => {
   const [ currentUser, setCurrentUser ] = useState();
 
   async function signUp() {
-    if (email === '' || password === '') {
-      setError({
-        error: 'Email and password are mandatory.'
-      })
+    if (email === '' || password === '' || displayName === '') {
+      setError([
+        ...error,
+        'Email username and password are mandatory.'
+      ])
       return;
     }
+    
     try {
       // await createUserWithEmailAndPassword(auth, email, password)
       await createUserWithEmailAndPassword(auth, email, password).catch((err) =>
@@ -54,11 +50,26 @@ const SignUpScreen = ({ navigation }) => {
   }
 
  useEffect(() => {
-  console.log('WHAT IS THE CURRENT USER? ::::', auth.currentUser)
+  // console.log('WHAT IS THE CURRENT USER? ::::', auth.currentUser)
   return () => {
     signUp();
   }
 }, [currentUser]);
+
+// useEffect(() => {
+//   const unsubscribeFromAuthStatuChanged = onAuthStateChanged(auth, (user) => {
+//     if (user) {
+//       // User is signed in, see docs for a list of available properties
+//       // https://firebase.google.com/docs/reference/js/firebase.User
+//       setUser(user);
+//     } else {
+//       // User is signed out
+//       setUser(undefined);
+//     }
+//   });
+
+//   return unsubscribeFromAuthStatuChanged;
+// }, []);
 
 
 
@@ -74,7 +85,6 @@ const SignUpScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text>Signup screen!</Text>
 
       {!!error && <View style={styles.error}><Text>{error}</Text></View>}
 
@@ -113,7 +123,10 @@ const SignUpScreen = ({ navigation }) => {
           />}
         />
 
-        <Button title="Sign up" buttonStyle={styles.control} onPress={signUp} />
+
+        <TouchableOpacity style={styles.control__button}  onPress={signUp}>
+          <Text style={styles.control__text}>Submit</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -138,6 +151,20 @@ const styles = StyleSheet.create({
 
   control: {
     marginTop: 10
+  },
+  control__button: {
+    marginTop: 10,
+    width: '100%',
+    backgroundColor: 'black',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 50
+  },
+  control__text: {
+    padding: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: 'white'
   },
 
   error: {

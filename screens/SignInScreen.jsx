@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Input, Button } from 'react-native-elements';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 const auth = getAuth();
 
-const SignInScreen = () => {
+const SignInScreen = ({ navigation }) => {
   const [value, setValue] = useState({
     email: '',
     password: '',
@@ -34,7 +34,7 @@ const SignInScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Signin screen!</Text>
+      {/* <Text>Signin screen!</Text> */}
 
       {!!value.error && <View style={styles.error}><Text>{value.error}</Text></View>}
 
@@ -62,7 +62,17 @@ const SignInScreen = () => {
           />}
         />
 
-        <Button title="Sign in" buttonStyle={styles.control} onPress={signIn} />
+        <TouchableOpacity style={styles.control__button} onPress={signIn}>
+          <Text style={styles.control__text}>Sign in</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.control__button} onPress={() => navigation.navigate('Sign Up')}>
+          <Text style={styles.control__text}>Register</Text>
+        </TouchableOpacity>
+
+        {/* <View>
+           <Text title="Sign in" style={styles.control__text} onPress={signIn}>Click here to register</Text>
+        </View> */}
+
       </View>
     </View>
   );
@@ -82,11 +92,27 @@ const styles = StyleSheet.create({
     flex: 2,
     width: '100%',
     padding: 20
-
   },
 
   control: {
     marginTop: 10
+  },
+  control__button: {
+    marginTop: 10,
+    width: '100%',
+    backgroundColor: 'black',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 50
+  },
+  control__text: {
+    // flex: 1,
+    // width: '100%',
+    padding: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: 'white'
+    // backgroundColor: 'blue'
   },
 
   error: {
