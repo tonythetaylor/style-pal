@@ -10,20 +10,22 @@ import pantsData from "../bottomData";
 import shoeData from "../shoeData";
 import shirtData from "../topdata";
 
+import { readData } from '../database/firebase_clthg';
+
 export const SLIDER_WIDTH = Dimensions.get('window').width;
 export const ITEM_WIDTH = Dimensions.get('window').width;
 export const ITEM_HEIGHT = Dimensions.get('window').height / 2;
 
 const STORAGE_KEY = [
-    {typeShirts: 'shirts'},
-    {typePants: 'pants'},
-    {typeShoes: 'shoes'}
+    { typeShirts: 'shirts' },
+    { typePants: 'pants' },
+    { typeShoes: 'shoes' }
 ]
 
 const AppButton = ({ onPress, title }) => (
-    <TouchableOpacity onPress={onPress} style={{ width: '100%', height: '100%', left: 15, marginLeft: 1, marginTop: 1, alignContent: 'center', justifyContent: 'center'}}>
+    <TouchableOpacity onPress={onPress} style={{ width: '100%', height: '100%', left: 15, marginLeft: 1, marginTop: 1, alignContent: 'center', justifyContent: 'center' }}>
         {/* <FontAwesomeIcon icon={faArrowUpFromBracket} color={'white'} size={30} /> */}
-        <Text style={{color:'white'}}>Remove Item</Text>
+        <Text style={{ color: 'white' }}>Remove Item</Text>
     </TouchableOpacity>
 );
 
@@ -33,53 +35,53 @@ const ClosetMainView = ({ route, navigation }) => {
     const [toggle, setToggle] = useState(false)
     const [optionsIndex, setOptionsIndex] = useState(0);
     const [selectedArr, setSelectedArr] = useState([]);
-    const [propData, setData] = useState({})
+    const [firebaseData, setData] = useState([])
 
     const [shirts, setShirtData] = useState([])
     const [pants, setPantsData] = useState([])
     const [shoes, setShoesData] = useState([])
 
     const { data } = route.params;
+    // console.log( firebaseData)
 
     const setClosetByItem = async (item) => {
-        if (item.type == 'Shirt') {
-            let updateList = new Array()
-            updateList.push(item)
-            console.log('setShirtData', updateList)
+        // console.log('setClosetByItem', item, data)
+        item.map((byItem) => {
+            if (byItem.type === 'Shirt' || data.type === 'Shirt') {
+                let updateList = new Array()
+                updateList.push(byItem)
+                console.log('setShirtData', updateList)
+                setShirtData(current => [byItem, ...current])
+            }
 
-            setShirtData(current => [item, ...current])
-            // saveData(shirts)
-        } 
-        
-        if (item.type == 'Pants') {
-            let updateList = new Array()
-            updateList.push(item)
-            console.log('setPantsData', updateList)
+            if (byItem.type === 'Pants' || data.type === 'Pants') {
+                let updateList = new Array()
+                updateList.push(byItem)
+                console.log('setPantsData', updateList)
+                setPantsData(current => [byItem, ...current])
+            }
 
-            setPantsData(current => [item, ...current])
-        } 
-
-        if (item.type == 'Shoes') {
-            let updateList = new Array()
-            updateList.push(item)
-            console.log('setShoeData', updateList)
-
-            setShoesData(current => [item, ...current])
-        }
+            if (byItem.type === 'Shoes' || data.type === 'Shoes') {
+                let updateList = new Array()
+                updateList.push(byItem)
+                console.log('setShoeData', updateList)
+                setShoesData(current => [byItem, ...current])
+            }
+        })
     }
 
-   const matchItems = (slectedItems) => {
-    console.log('LETS MATCH', slectedItems)
-   }
-    
+    const matchItems = (slectedItems) => {
+        console.log('LETS MATCH', slectedItems)
+    }
+
     const pickItem = (item) => {
         // place non unique id's into an empty array
         let matchId = []
-        for(const prop in items) {
+        for (const prop in items) {
             if (items[prop].id === item.id) {
                 alert(`${item.style} is already selected`)
                 matchId.push(items[prop].id)
-            } 
+            }
         }
         // if the selected id doesnt match, add the item to the items array
         if (matchId != item.id) {
@@ -90,9 +92,9 @@ const ClosetMainView = ({ route, navigation }) => {
     const hangItemUp = (item) => {
         // this is the line that you are looking for
         // setItems((oldState) => oldState.filter((item) => item !== items));
-      
+
         setSelected(current => [...current]);
-      
+
         const index = items.indexOf(item);
         console.log(index)
         if (index > -1) { // only splice array when item is found
@@ -144,25 +146,25 @@ const ClosetMainView = ({ route, navigation }) => {
 
     const saveData = async (item) => {
         try {
-          await AsyncStorage.setItem(STORAGE_KEY[0].typeShirts, JSON.stringify(item))
-          console.log('Data successfully saved')
+            await AsyncStorage.setItem(STORAGE_KEY[0].typeShirts, JSON.stringify(item))
+            console.log('Data successfully saved')
         } catch (e) {
-          alert('Failed to save the data to the storage')
+            alert('Failed to save the data to the storage')
         }
-      }
+    }
 
-    const readData = async () => {
-        try {
-          const value = await AsyncStorage.getItem('shirts');
-            console.log('readData: ', value)
-          if (value !== null) {
-            const _v = JSON.parse(value)
-            setSelected(current => [_v, ...current]);
-          }
-        } catch (e) {
-          alert('Failed to fetch the input from storage');
-        }
-      };
+    // const readData = async () => {
+    //     try {
+    //       const value = await AsyncStorage.getItem('shirts');
+    //         console.log('readData: ', value)
+    //       if (value !== null) {
+    //         const _v = JSON.parse(value)
+    //         setSelected(current => [_v, ...current]);
+    //       }
+    //     } catch (e) {
+    //       alert('Failed to fetch the input from storage');
+    //     }
+    //   };
 
     //   console.log('shirt data -----> ',  shirts)
     //   console.log('pants data -----> ',  pants)
@@ -170,20 +172,65 @@ const ClosetMainView = ({ route, navigation }) => {
     //   console.log('SELECTED ITEMS &&&&&&&&&&', items)
 
     useEffect(() => {
-
         // if (selected.length !== 0) {
         //      readData() 
         // } 
-      
-            if(JSON.stringify(data) !== '{}') {
-                if (JSON.stringify(selected) !== '{}') {
-                    setClosetByItem(data)
 
-                    setSelected(current => [data, ...current]);
-                    navigation.setParams({data: {}})
-                } 
-            }
-      }, [data, shirts, pants]);
+        if (data.type === 'Shirt') {
+            setShirtData(current => [data, ...current])
+            setSelected(current => [data, ...current]);
+            navigation.setParams({ data: {} })
+        }
+
+        if (data.type === 'Pants') {
+            setPantsData(current => [data, ...current])
+            setSelected(current => [data, ...current]);
+            navigation.setParams({ data: {} })
+        }
+
+        if (data.type === 'Shoes') {
+            setShoesData(current => [data, ...current])
+            setSelected(current => [data, ...current]);
+            navigation.setParams({ data: {} })
+        }
+    }, [data]);
+
+    //   useEffect(() => {
+    //     console.log('COFFEE', fbdata)
+    //     setClosetByItem(data)
+    //     // console.log(readData())
+    //     // setTimeout(() => {
+    //     //     setLoading(false);
+    //     // }, 5000);
+    // }, [])
+
+    useEffect(() => {
+
+        // setTimeout(() => {
+            //     setLoading(false);
+            readData()
+                .then(userList => {
+                    // console.log('COFFEE:', userList)
+                    setClosetByItem(userList)
+                    // setSelected(current => [userList, ...current]);
+
+                })
+                .catch(error => {
+                    // handle any error state, rejected promises, etc..
+                });
+
+        // }, 1000);
+
+
+
+
+
+        // console.log('TEST [] ', fbData)
+        // setData(readData())
+        // setTimeout(() => {
+        //     setLoading(false);
+        // }, 5000);
+    }, [])
 
     return (
         <View style={[styles.container, {
@@ -197,46 +244,46 @@ const ClosetMainView = ({ route, navigation }) => {
                 justifyContent: "center",
             }} >
                 <View style={{
-                flex: 0.1,
-                flexDirection: 'row',
-                zIndex:1,
-                alignItems: "space-between",
-                // paddingLeft: 5,
-                // justifyContent: "space-between"
-            }}>
-                <View style={{top: 5, marginLeft: 20, marginRight: 20, flex: 1, flexDirection: "row", justifyContent: "space-between", borderRadius: 5, borderWidth: 2, borderColor: 'white', backgroundColor: 'white'}}>
-                <TouchableOpacity onPress={() => setSelected(shirts)}>
-                         {/* <FontAwesomeIcon icon={faT} color={'black'} size={24} /> */}
-                         <Text style={{color: 'black', borderRadius: 5, borderWidth: .50, borderColor: 'black', padding: 5}}>SHIRTS</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{}} onPress={() =>  setSelected(pants)}>
-                         {/* <FontAwesomeIcon icon={faP} color={'black'} size={24} /> */}
-                         <Text style={{color: 'black', borderRadius: 5, borderWidth: .50, borderColor: 'black', padding: 5}}>PANTS</Text>
+                    flex: 0.1,
+                    flexDirection: 'row',
+                    zIndex: 1,
+                    alignItems: "space-between",
+                    // paddingLeft: 5,
+                    // justifyContent: "space-between"
+                }}>
+                    <View style={{ top: 5, marginLeft: 20, marginRight: 20, flex: 1, flexDirection: "row", justifyContent: "space-between", borderRadius: 5, borderWidth: 2, borderColor: 'white', backgroundColor: 'white' }}>
+                        <TouchableOpacity onPress={() => setSelected(shirts)}>
+                            {/* <FontAwesomeIcon icon={faT} color={'black'} size={24} /> */}
+                            <Text style={{ color: 'black', borderRadius: 5, borderWidth: .50, borderColor: 'black', padding: 5 }}>SHIRTS</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{}} onPress={() => setSelected(pants)}>
+                            {/* <FontAwesomeIcon icon={faP} color={'black'} size={24} /> */}
+                            <Text style={{ color: 'black', borderRadius: 5, borderWidth: .50, borderColor: 'black', padding: 5 }}>PANTS</Text>
 
-                </TouchableOpacity>
-                <TouchableOpacity style={{}} onPress={() =>  setSelected(shoes)}>
-                         {/* <FontAwesomeIcon icon={faS} color={'black'} size={24} /> */}
-                         <Text style={{color: 'black', borderRadius: 5, borderWidth: .50, borderColor: 'black', padding: 5}}>SHOES</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={{}} onPress={() => setSelected(shoes)}>
+                            {/* <FontAwesomeIcon icon={faS} color={'black'} size={24} /> */}
+                            <Text style={{ color: 'black', borderRadius: 5, borderWidth: .50, borderColor: 'black', padding: 5 }}>SHOES</Text>
 
-                </TouchableOpacity>
-                <TouchableOpacity  onPress={() => matchItems(items)}>
-                         {/* <FontAwesomeIcon icon={faS} color={'black'} size={24} /> */}
-                         <Text style={{color: 'black', borderRadius: 5, borderWidth: .50, borderColor: 'black', padding: 5}}>MATCH</Text>
-                </TouchableOpacity>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => matchItems(items)}>
+                            {/* <FontAwesomeIcon icon={faS} color={'black'} size={24} /> */}
+                            <Text style={{ color: 'black', borderRadius: 5, borderWidth: .50, borderColor: 'black', padding: 5 }}>MATCH</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </View>
-            {selected.length !== 0 ? 
-                <Carousel
-                    data={selected}
-                    renderItem={mainView}
-                    sliderWidth={SLIDER_WIDTH}
-                    itemWidth={ITEM_WIDTH}
-                />
-                :
-                <View style={{alignContent: 'center', justifyContent: 'center', alignItems: 'center', top: -75, zIndex: 1}}>
-                    <Text >Select a category to add clothing items</Text>
-                    <View style={{width: SLIDER_WIDTH}}></View>
-                </View>
+                {data !== 'undefined' && selected.length !== 0 ?
+                    <Carousel
+                        data={selected}
+                        renderItem={mainView}
+                        sliderWidth={SLIDER_WIDTH}
+                        itemWidth={ITEM_WIDTH}
+                    />
+                    :
+                    <View style={{ alignContent: 'center', justifyContent: 'center', alignItems: 'center', top: -75, zIndex: 1 }}>
+                        <Text >Select a category to add clothing items</Text>
+                        <View style={{ width: SLIDER_WIDTH }}></View>
+                    </View>
                 }
             </View>
             {/* picked stage view */}
@@ -245,7 +292,7 @@ const ClosetMainView = ({ route, navigation }) => {
                     {items.map((item, idx) =>
                         <View key={idx}>
                             {optionsIndex == items[idx] ? toggle && (
-                                <View key={idx} style={{ backgroundColor: "black", height: 40, alignContent: 'center', justifyContent: 'center'}}>
+                                <View key={idx} style={{ backgroundColor: "black", height: 40, alignContent: 'center', justifyContent: 'center' }}>
                                     <AppButton onPress={() => hangItemUp(item)} />
                                 </View>
                             ) : []}

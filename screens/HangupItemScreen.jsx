@@ -1,7 +1,7 @@
 
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Storage, Text, View, TouchableOpacity, Alert, ImageBackground, Button, Image, SafeAreaView } from 'react-native';
+import { StyleSheet, Storage, Text, View, TouchableOpacity, Alert, ActivityIndicator, ImageBackground, Button, Image, SafeAreaView } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import { Input } from 'react-native-elements';
@@ -11,6 +11,19 @@ import { TextInput } from 'react-native-paper';
 import SelectDropdown from 'react-native-select-dropdown'
 
 import uuid from 'react-native-uuid';
+
+import { db } from '../config/firebase';
+import { collection, doc, setDoc, addDoc, updateDoc, deleteDoc, getDoc, getDocs, where, query } from "firebase/firestore";
+
+import { getAuth } from 'firebase/auth';
+
+const auth = getAuth();
+
+import { createData } from "../database/firebase_clthg"
+import { writeToStorage } from "../database/fileUpload"
+import { set } from 'firebase/database';
+import { getDownloadURL, uploadBytesResumable, ref, uploadBytes } from "firebase/storage"
+import { storage } from "../config/firebase"
 
 const clothingItems = ["Shirt", "Pants", "Shoes"]
 
@@ -27,6 +40,11 @@ const HangupItemScreen = ({ navigation }) => {
     const [itemColor, onChangeColor] = useState("");
     const [itemSize, onChangeSize] = useState("");
     const [selection, setSelection] = useState([])
+    const [data, setFirebaseData] = useState()
+    const [downloadUrl, setDownloadUrl] = useState()
+
+    const [percent, setPercent] = useState(0);
+    const [isLoading, setLoading] = useState(false);
 
     // useEffect(() => {
     //    setPickedImagePath('')
@@ -46,7 +64,6 @@ const HangupItemScreen = ({ navigation }) => {
         }
 
         const result = await ImagePicker.launchImageLibraryAsync();
-
         // Explore the result
         console.log(result);
 
@@ -82,22 +99,43 @@ const HangupItemScreen = ({ navigation }) => {
         navigation.goBack()
     }
 
-    const sendData = () => {
-        const d = {
+    const sendData = async () => {
+        const filename = pickedImagePath.substring(pickedImagePath.lastIndexOf('/') + 1);
+        const uploadUri = Platform.OS === 'ios' ? pickedImagePath.replace('file://', '') : pickedImagePath;
+        const response = await fetch(uploadUri);
+        const file = await response.blob()
+        const storageRef = ref(storage, `/clothes/${filename}`)
+        const uploadTask = uploadBytesResumable(storageRef, file);
+        uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+                const percent = Math.round(
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                );
+                console.log(`${percent} % done`)
+                setLoading(true);
+            },
+            (error) => console.log(error)
+        );
+        await uploadTask; // 👈 uploadTask is a promise itself, so you can await it
+
+        let download = await getDownloadURL(uploadTask.snapshot.ref);
+        // 👆 getDownloadURL returns a promise too, so... yay more await
+
+        const data = {
             data: {
                 id: uuid.v4(),
                 style: brandStyle,
                 colorway: itemColor,
                 release: 2022,
                 brand: brand,
-                url: pickedImagePath,
-                type: selection,
-
+                url: download,
+                type: selection
             }
         }
 
-        navigation.navigate('Closet', { ...d })
-        // console.log(brandStyle, itemColor, brand, pickedImagePath)
+        createData(data)
+        navigation.navigate('Closet', { ...data })
         setPickedImagePath('')
         setPickedImagePath('')
         onChangeBrand('')
@@ -105,10 +143,19 @@ const HangupItemScreen = ({ navigation }) => {
         onChangeColor('')
         onChangeColor('')
         // navigation.setParams({ data: null });
-
     }
 
-    return (
+    useEffect(() => {
+        return () => {
+            setPercent(); // This worked for me
+        };
+    }, [percent]);
+
+    return isLoading ?
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <ActivityIndicator size="large"/>
+        </View>
+        :
         <View style={styles.screen}>
             <View style={styles.buttonContainer}>
                 <View style={styles.button} >
@@ -210,7 +257,6 @@ const HangupItemScreen = ({ navigation }) => {
                 {/* <Button title="Go back" onPress={() => navigation.goBack()}  color="#000" /> */}
             </View>
         </View>
-    );
 }
 
 const styles = StyleSheet.create({
@@ -238,14 +284,14 @@ const styles = StyleSheet.create({
         elevation: 3,
         backgroundColor: 'black',
         height: 50
-      },
-      text: {
+    },
+    text: {
         fontSize: 16,
         lineHeight: 21,
         fontWeight: 'bold',
         letterSpacing: 0.25,
         color: 'white',
-      },
+    },
     imageContainer: {
         flex: 1,
         padding: 10,

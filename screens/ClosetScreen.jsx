@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { View, Text, StyleSheet, Image, ScrollView, Button, SafeAreaView, TouchableOpacity } from 'react-native'
 import { FlatGrid } from 'react-native-super-grid';
 
@@ -8,19 +8,34 @@ import shoeData from "../shoeData";
 import shirtData from "../topdata";
 import brandData from "../brandData";
 import ClosetGridView from '../components/ClosetGridView';
+import { readData } from '../database/firebase_clthg';
 
 export default function ClosetScreen({ route, navigation }) {
     const [items, setItems] = React.useState([shirtData]);
+    const [fbData, setData] = useState()
 
     const handlerLongClick = () => {
         //handler for Long Click
         alert('Button Long Pressed');
     };
-    
+
     const handlerClick = () => {
         //handler for Long Click
         alert('Button Clicked!');
     };
+
+    // useEffect(() => {
+    //     readData()
+    //         .then(userList => setData(userList))
+    //         .catch(error => {
+    //             // handle any error state, rejected promises, etc..
+    //         });
+    //     // console.log('TEST [] ', fbData)
+    //     // setData(readData())
+    //     // setTimeout(() => {
+    //     //     setLoading(false);
+    //     // }, 5000);
+    // }, [])
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -47,7 +62,7 @@ export default function ClosetScreen({ route, navigation }) {
 
             <ClosetMainView route={route} navigation={navigation} />
             {/* <ClosetGridView/> */}
-        {/* </> */}
+            {/* </> */}
         </SafeAreaView>
     );
 }

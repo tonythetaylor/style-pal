@@ -17,7 +17,7 @@ const Drawer = createDrawerNavigator();
 
 function AppDrawerContent(props) {
   const { user } = useAuthentication();
-  // console.log('USER', user)
+  console.log('USER', auth.currentUser.uid)
   return (
 <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
