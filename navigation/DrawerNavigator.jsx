@@ -17,7 +17,7 @@ const Drawer = createDrawerNavigator();
 
 function AppDrawerContent(props) {
   const { user } = useAuthentication();
-  console.log('USER', auth.currentUser.uid)
+  // console.log('USER', auth.currentUser.uid)
   return (
 <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
@@ -33,7 +33,7 @@ function AppDrawerContent(props) {
           }}
         >
           <View>
-          <Text>{user?.displayName.toLowerCase()}</Text>
+          <Text>{user?.displayName}</Text>
           </View>
           <Image
             source={{

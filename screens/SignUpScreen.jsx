@@ -32,7 +32,7 @@ const SignUpScreen = ({ navigation }) => {
       console.log(err)
     );
 
-      await updateProfile(auth.currentUser, { displayName: displayName }).catch(
+      await updateProfile(auth.currentUser, { displayName: displayName.toLowerCase() }).catch(
         (err) => console.log(err)
       );
       setCurrentUser(auth.currentUser)
