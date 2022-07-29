@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
 import Carousel from 'react-native-snap-carousel';
 import pantsData from "../bottomData";
@@ -8,7 +8,34 @@ import shirtData from "../topdata";
 export const SLIDER_WIDTH = Dimensions.get('window').width;
 export const ITEM_WIDTH = Dimensions.get('window').width;
 
-const HomeScreen = () => {
+const HomeScreen = ({route, navigation}) => {
+  // get picked clothes from closet
+  if(route.params === undefined) return []
+  const { selectedItems } = route.params;
+
+  if(selectedItems !== undefined) {
+    console.log('TODAYS PICKS', selectedItems)
+  }
+
+  const [shirts, setShirtData] = useState([])
+  const [pants, setPantsData] = useState([])
+  const [shoes, setShoesData] = useState([])
+
+  const sortTypes = (item) => {
+    item.map((byItem) => {
+    if(byItem.type === 'Shirt') {
+      setShirtData(current => [byItem, ...current])
+    }
+
+    if(byItem.type === 'Pants') {
+      setPantsData(current => [byItem, ...current])
+    }
+
+    if(byItem.type === 'Shoes') {
+      setShoesData(current => [byItem, ...current])
+    }
+  })
+  }
 
   const renderTop = ({ item }) => {
     return (
@@ -73,6 +100,11 @@ const HomeScreen = () => {
       </View>
     );
   };
+  
+  useEffect(() => {
+    sortTypes(selectedItems)
+  }, [])
+  
 
 
   return (
@@ -87,19 +119,19 @@ const HomeScreen = () => {
         alignItems: "center"
       }} >
         <Carousel
-          data={shirtData}
+          data={shirts}
           renderItem={renderTop}
           sliderWidth={SLIDER_WIDTH}
           itemWidth={ITEM_WIDTH}
         />
         <Carousel
-          data={pantsData}
+          data={pants}
           renderItem={renderBottom}
           sliderWidth={SLIDER_WIDTH}
           itemWidth={ITEM_WIDTH}
         />
         <Carousel
-          data={shoeData}
+          data={shoes}
           renderItem={renderShoe}
           sliderWidth={SLIDER_WIDTH}
           itemWidth={ITEM_WIDTH}

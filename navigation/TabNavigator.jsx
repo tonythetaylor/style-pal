@@ -111,7 +111,8 @@ const BottomTabNavigator = (navigation) => {
         //     </TouchableOpacity>
         // )
     }} />
-      <Tab.Screen name="Todays Picks" 
+      <Tab.Screen name="Todays Picks"
+      initialParams={{ data: {} }}
       component={TodaysPicksStackNavigator}
       options={({ route, navigation }) => ({ // transform screenOptions to a function
         tabBarLabel: '',

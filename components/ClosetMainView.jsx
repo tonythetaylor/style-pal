@@ -70,8 +70,15 @@ const ClosetMainView = ({ route, navigation }) => {
         })
     }
 
-    const matchItems = (slectedItems) => {
-        console.log('LETS MATCH', slectedItems)
+    const matchItems = (selectedItems) => {
+        console.log('LETS MATCH', selectedItems)
+        if (selectedItems !== undefined) {
+            navigation.navigate('Todays Picks',
+            {
+                screen:`Today's picks`, 
+                params: {selectedItems},
+            })
+        }
     }
 
     const pickItem = (item) => {
@@ -171,11 +178,7 @@ const ClosetMainView = ({ route, navigation }) => {
     //   console.log('shoes data -----> ',  shoes)
     //   console.log('SELECTED ITEMS &&&&&&&&&&', items)
 
-    useEffect(() => {
-        // if (selected.length !== 0) {
-        //      readData() 
-        // } 
-
+    useEffect(() => { 
         if (data.type === 'Shirt') {
             setShirtData(current => [data, ...current])
             setSelected(current => [data, ...current]);

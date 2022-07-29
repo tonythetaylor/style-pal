@@ -41,7 +41,7 @@ const searchData = [
   },
   {
     "id": "7",
-    "name": "Retro Jordan 1 Travis Scott",
+    "name": "Retro Jordan 1 Low Travis Scott",
     "details": "Sell or Swap. Min Price: $1300"
   },
   {
