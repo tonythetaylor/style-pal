@@ -8,6 +8,54 @@ import {
 import List from "../components/List";
 import SearchBar from "../components/SearchBar";
 
+const searchData = [
+  {
+    "id": "1",
+    "name": "Ally Nicole",
+    "details": "Celebrity Stylist"
+  },
+  {
+    "id": "2",
+    "name": "Brett Corbin",
+    "details": "Sneaker Shopper"
+  },
+  {
+    "id": "3",
+    "name": "Tristian Coplin",
+    "details": "Specializes in accessory matching"
+  },
+  {
+    "id": "4",
+    "name": "Shelly Belly",
+    "details": "Jewelry Maker"
+  },
+  {
+    "id": "5",
+    "name": "Tiffany Bean",
+    "details": "Lash Techniciain"
+  },
+  {
+    "id": "6",
+    "name": "Daniel Cruze",
+    "details": "InstaCLTHG shopper"
+  },
+  {
+    "id": "7",
+    "name": "Retro Jordan 1 Travis Scott",
+    "details": "Sell or Swap. Min Price: $1300"
+  },
+  {
+    "id": "8",
+    "name": "Yezzy 350",
+    "details": "Donating, First come first serve!"
+  },
+  {
+    "id": "9",
+    "name": "H&M",
+    "details": "25% off coupon + SALE NOW!!"
+  }
+]
+
 const SearchScreen = () => {
   const [searchPhrase, setSearchPhrase] = useState("");
   const [clicked, setClicked] = useState(false);
@@ -16,11 +64,7 @@ const SearchScreen = () => {
   // get data from the fake api endpoint
   useEffect(() => {
     const getData = async () => {
-      const apiResponse = await fetch(
-        "https://my-json-server.typicode.com/kevintomas1995/logRocket_searchBar/languages"
-      );
-      const data = await apiResponse.json();
-      setFakeData(data);
+      setFakeData(searchData);
     };
     getData();
   }, []);
